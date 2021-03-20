@@ -6,7 +6,7 @@ namespace Dilemma.Domain
     {
         public Guid Id { get; }
         public int Age { get; set; }
-        public string Location { get; }
+        public Location Location { get; }
         public string Gender { get; }
     }
 }

@@ -7,31 +7,19 @@ namespace Dilemma.Domain
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public bool IsOpen { get; private set; }
-        
-        protected Topic(Guid id, string name, string description, bool isOpen)
+
+        protected Topic(Guid id, string name, string description)
         {
             Id = id;
             Name = name;
             Description = description;
-            IsOpen = isOpen;
         }
 
-        static Topic Create(Guid id, string name, string description, bool isOpen)
+        static Topic Post(Guid id, string name, string description)
         {
-            return new Topic(id, name, description, isOpen);
+            return new Topic(id, name, description);
         }
         
-        public void Close()
-        {
-            IsOpen = false;
-        }
-
-        public void Open()
-        {
-            IsOpen = true;
-        }
-
         public void ChangeDescription(string description)
         {
             Description = description;
