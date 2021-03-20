@@ -5,4 +5,8 @@
         <RootNamespace>Dilemma</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Rules" />
+    </ItemGroup>
+
 </Project>
