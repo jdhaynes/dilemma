@@ -6,6 +6,9 @@
 # macOS
 .DS_STORE
 
+# JetBrains
+.idea/
+
 # User-specific files
 *.rsuser
 *.suo
