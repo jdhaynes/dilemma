@@ -6,7 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Rules" />
+      <Folder Include="Events" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\common\dotnet\Common.Domain\Common.Domain.csproj" />
     </ItemGroup>
 
 </Project>
