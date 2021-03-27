@@ -8,10 +8,9 @@ namespace Dilemma.Rules
         public Guid DilemmaId { get;  }
         public Guid PosterId { get; }
 
-        public DilemmaPostedEvent(Guid dilemmaId, Guid posterId)
+        public DilemmaPostedEvent(Guid dilemmaId)
         {
             DilemmaId = dilemmaId;
-            PosterId = posterId;
         }
     }
 }

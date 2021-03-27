@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DilemmaSvc.Application", "D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Domain", "..\..\common\dotnet\Common.Domain\Common.Domain.csproj", "{979C1CF4-1A9F-46B8-A317-C5164B4435B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DilemmaSvc.Domain.Tests", "DilemmaSvc.Domain.Tests\DilemmaSvc.Domain.Tests.csproj", "{78B9E5E9-89DB-4ADB-8683-76EAC02DA729}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{979C1CF4-1A9F-46B8-A317-C5164B4435B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{979C1CF4-1A9F-46B8-A317-C5164B4435B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{979C1CF4-1A9F-46B8-A317-C5164B4435B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78B9E5E9-89DB-4ADB-8683-76EAC02DA729}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78B9E5E9-89DB-4ADB-8683-76EAC02DA729}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78B9E5E9-89DB-4ADB-8683-76EAC02DA729}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78B9E5E9-89DB-4ADB-8683-76EAC02DA729}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

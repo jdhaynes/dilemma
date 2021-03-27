@@ -14,15 +14,5 @@ namespace Dilemma.Domain
             Name = name;
             Description = description;
         }
-
-        static Topic Post(Guid id, string name, string description)
-        {
-            return new Topic(id, name, description);
-        }
-        
-        public void ChangeDescription(string description)
-        {
-            Description = description;
-        }
     }
 }
