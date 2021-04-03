@@ -8,7 +8,7 @@ namespace Dilemma.Domain
         public string Name { get; private set; }
         public string Description { get; private set; }
 
-        protected Topic(Guid id, string name, string description)
+        public Topic(Guid id, string name, string description)
         {
             Id = id;
             Name = name;
