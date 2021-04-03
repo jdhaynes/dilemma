@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Domain", "..\..\comm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DilemmaSvc.Domain.Tests", "DilemmaSvc.Domain.Tests\DilemmaSvc.Domain.Tests.csproj", "{78B9E5E9-89DB-4ADB-8683-76EAC02DA729}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DilemmaSvc.Application.Tests", "DilemmaSvc.Application.Tests\DilemmaSvc.Application.Tests.csproj", "{24CF497F-F1D3-45B3-814F-C78EBAE0BFBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Application", "..\..\common\dotnet\Common.Application\Common.Application.csproj", "{D38A7DDB-4193-4A1B-A62B-3EFBB4F603EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{78B9E5E9-89DB-4ADB-8683-76EAC02DA729}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78B9E5E9-89DB-4ADB-8683-76EAC02DA729}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78B9E5E9-89DB-4ADB-8683-76EAC02DA729}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24CF497F-F1D3-45B3-814F-C78EBAE0BFBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24CF497F-F1D3-45B3-814F-C78EBAE0BFBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24CF497F-F1D3-45B3-814F-C78EBAE0BFBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24CF497F-F1D3-45B3-814F-C78EBAE0BFBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38A7DDB-4193-4A1B-A62B-3EFBB4F603EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38A7DDB-4193-4A1B-A62B-3EFBB4F603EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38A7DDB-4193-4A1B-A62B-3EFBB4F603EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38A7DDB-4193-4A1B-A62B-3EFBB4F603EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

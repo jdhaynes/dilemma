@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\common\dotnet\Common.Application\Common.Application.csproj" />
       <ProjectReference Include="..\DilemmaSvc.Domain\DilemmaSvc.Domain.csproj" />
     </ItemGroup>
 

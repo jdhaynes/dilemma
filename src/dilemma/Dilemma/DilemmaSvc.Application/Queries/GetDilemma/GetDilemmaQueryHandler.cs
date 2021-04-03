@@ -1,4 +1,12 @@
-$HEADER$namespace $NAMESPACE$
+using Common.Application;
+
+namespace DilemmaSvc.Application.Queries.GetDilemma
 {
-  public class $CLASS$ {$END$}
+    public class GetDilemmaQueryHandler : IQueryHandler<GetDilemmaQuery, DilemmaDto>
+    {
+        public DilemmaDto Handle(GetDilemmaQuery query)
+        {
+            return null;
+        }
+    }
 }
