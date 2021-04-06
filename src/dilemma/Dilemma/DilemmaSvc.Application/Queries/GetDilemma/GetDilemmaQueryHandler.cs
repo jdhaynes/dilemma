@@ -10,15 +10,32 @@ namespace DilemmaSvc.Application.Queries.GetDilemma
     public class GetDilemmaQueryHandler : IQueryHandler<GetDilemmaQuery, DTOs.Dilemma>
     {
         private readonly ISqlConnectionFactory _connectionFactory;
+        private readonly IFileStore _fileStore;
 
-        public GetDilemmaQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
+        public GetDilemmaQueryHandler(ISqlConnectionFactory sqlConnectionFactory,
+            IFileStore fileStore)
         {
             _connectionFactory = sqlConnectionFactory;
+            _fileStore = fileStore;
         }
 
         public DTOs.Dilemma Handle(GetDilemmaQuery query)
         {
-            return GetDilemmaAndOptions(query);
+            DTOs.Dilemma dilemma = GetDilemmaAndOptions(query);
+            dilemma = GetOptionImageUrls(dilemma);
+            
+            return dilemma;
+        }
+
+        private DTOs.Dilemma GetOptionImageUrls(DTOs.Dilemma dilemma)
+        {
+            // TODO: Can't modify state of dilemma passed in as arg.
+            foreach (Option option in dilemma.Options)
+            {
+                option.ImageUrl = _fileStore.GetUrlForObjectKey(option.ImageObjectId);
+            }
+
+            return dilemma;
         }
 
         private DTOs.Dilemma GetDilemmaAndOptions(GetDilemmaQuery query)

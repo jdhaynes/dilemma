@@ -6,6 +6,7 @@ namespace DilemmaSvc.Application.Queries.GetDilemma.DTOs
     {
         public Guid OptionId { get; set; }
         public string Description { get; set; }
-        public Guid ImageObjectId { get; set; }
+        public string ImageObjectId { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
