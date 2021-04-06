@@ -25,8 +25,9 @@ namespace DilemmaSvc.Application.Queries.GetDilemma
         {
             using (IDbConnection connection = _connectionFactory.GetConnection())
             {
-                // TODO: add column index to option.dilemma_id to optimise option lookup.
-                // TODO: potential to optimise to utilise single query with LEFT JOIN.
+                // TODO: Add column index to option.dilemma_id to optimise option lookup.
+                // TODO: Potential to optimise to utilise single query with LEFT JOIN.
+
                 string sql = $@"
                     SELECT id             AS {nameof(DTOs.Dilemma.DilemmaId)},
 	                       question       AS {nameof(DTOs.Dilemma.Question)},
@@ -42,7 +43,7 @@ namespace DilemmaSvc.Application.Queries.GetDilemma
                     WHERE option.dilemma_id = @DilemmaId;";
 
                 using (var multiQuery =
-                    connection.QueryMultiple(sql, new { DilemmaId = query.DilemmaId }))
+                    connection.QueryMultiple(sql, new {DilemmaId = query.DilemmaId}))
                 {
                     DTOs.Dilemma dilemma = multiQuery.Read<DTOs.Dilemma>().SingleOrDefault();
                     if (dilemma != null)

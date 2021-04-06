@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DilemmaSvc.Application.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Application", "..\..\common\dotnet\Common.Application\Common.Application.csproj", "{D38A7DDB-4193-4A1B-A62B-3EFBB4F603EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DilemmaSvc.Infrastructure", "DilemmaSvc.Infrastructure\DilemmaSvc.Infrastructure.csproj", "{2035D016-2C25-4067-BA82-1A24AD3DA204}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{D38A7DDB-4193-4A1B-A62B-3EFBB4F603EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D38A7DDB-4193-4A1B-A62B-3EFBB4F603EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D38A7DDB-4193-4A1B-A62B-3EFBB4F603EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2035D016-2C25-4067-BA82-1A24AD3DA204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2035D016-2C25-4067-BA82-1A24AD3DA204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2035D016-2C25-4067-BA82-1A24AD3DA204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2035D016-2C25-4067-BA82-1A24AD3DA204}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

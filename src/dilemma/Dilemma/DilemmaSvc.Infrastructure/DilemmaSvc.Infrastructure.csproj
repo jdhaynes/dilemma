@@ -4,4 +4,8 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DilemmaSvc.Application\DilemmaSvc.Application.csproj" />
+    </ItemGroup>
+
 </Project>
