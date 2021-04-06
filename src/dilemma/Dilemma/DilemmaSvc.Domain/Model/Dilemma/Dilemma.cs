@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Domain;
 using Dilemma.Rules;
 
@@ -22,6 +23,7 @@ namespace Dilemma.Domain
         private List<Option> _options;
         public IReadOnlyCollection<Option> Options => _options.AsReadOnly();
         public int OptionCount => _options.Count;
+        private List<Guid> _optionIds => Options.Select(x => x.Id).ToList();
 
         private Dilemma()
         {
@@ -58,7 +60,7 @@ namespace Dilemma.Domain
             }
 
             PostedDate = DateTime.Now;
-            RaiseDomainEvent(new DilemmaPostedEvent(Id));
+            RaiseDomainEvent(new DilemmaPostedEvent(Id, _optionIds));
         }
 
         public void AddOption(Guid optionId, string description, byte[] image)

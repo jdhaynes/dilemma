@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS option
 		CONSTRAINT option_pkey
 			PRIMARY KEY,
 	description varchar(40),
+	image_object_id uuid NOT NULL,
 	dilemma_id  uuid NOT NULL
 		CONSTRAINT fk_dilemma
 			REFERENCES dilemma

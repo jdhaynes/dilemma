@@ -1,5 +1,5 @@
 using System;
-using DilemmaSvc.Application.Queries;
+using DilemmaSvc.Application.Common;
 using DilemmaSvc.Application.Queries.GetDilemma;
 using NUnit.Framework;
 
@@ -9,11 +9,13 @@ namespace DilemmaSvc.Application.Tests.UnitTests
     public class GetDilemmaQueryTests
     {
         private GetDilemmaQueryHandler _handler;
+        private string _connString = "User ID=dev;Password=Dev_!=;Host=localhost;Port=25522;Database=dilemma_svc";
 
         [SetUp]
         public void Setup()
         {
-            _handler = new GetDilemmaQueryHandler();
+            PostgresConnectionFactory connectionFactory = new PostgresConnectionFactory(_connString);
+            _handler = new GetDilemmaQueryHandler(connectionFactory);
         }
 
         [Test]
@@ -21,7 +23,7 @@ namespace DilemmaSvc.Application.Tests.UnitTests
         {
             Guid id = new Guid("37EFCE6A-31E4-4422-8EF3-400BD465E4B3");
             GetDilemmaQuery query = new GetDilemmaQuery(id);
-            DilemmaDto dilemma = _handler.Handle(query);
+            var dilemma = _handler.Handle(query);
 
             Assert.IsNull(dilemma);
         }
@@ -29,9 +31,9 @@ namespace DilemmaSvc.Application.Tests.UnitTests
         [Test]
         public void GivenDilemmaExistsWhenGetReturnsNotNull()
         {
-            Guid id = new Guid("B41ED0C0-9F3B-423C-8B48-C0D9A04E1FE6");
+            Guid id = new Guid("7cc8b887-5461-4e26-901d-d87a7774a499");
             GetDilemmaQuery query = new GetDilemmaQuery(id);
-            DilemmaDto dilemma = _handler.Handle(query);
+            var dilemma = _handler.Handle(query);
 
             Assert.IsNotNull(dilemma);
         }
