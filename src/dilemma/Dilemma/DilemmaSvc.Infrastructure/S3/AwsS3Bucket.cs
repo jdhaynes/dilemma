@@ -11,11 +11,21 @@ namespace DilemmaSvc.Infrastructure.S3
 
         public AwsS3Bucket(string bucketName, string region)
         {
+            if (string.IsNullOrEmpty(bucketName))
+            {
+                throw new ArgumentException("Bucket name must be specified.", nameof(bucketName));
+            }
+            
+            if (string.IsNullOrEmpty(region))
+            {
+                throw new ArgumentException("Region must be specified.", nameof(region));
+            }
+            
             _bucketName = bucketName;
             _region = region;
         }
 
-        public string GetUrlForObjectKey(string key)
+        public string GetUrlForObject(string key)
         {
             if (String.IsNullOrEmpty(key))
             {

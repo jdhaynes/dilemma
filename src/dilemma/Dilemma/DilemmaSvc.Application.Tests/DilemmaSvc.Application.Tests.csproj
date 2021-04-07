@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+      <PackageReference Include="Moq" Version="4.16.1" />
       <PackageReference Include="Npgsql" Version="5.0.4" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
       <PackageReference Include="NUnit" Version="3.13.1" />
@@ -14,6 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DilemmaSvc.Application\DilemmaSvc.Application.csproj" />
+      <ProjectReference Include="..\DilemmaSvc.Infrastructure\DilemmaSvc.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

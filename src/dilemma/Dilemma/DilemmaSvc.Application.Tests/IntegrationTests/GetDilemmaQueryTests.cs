@@ -1,6 +1,7 @@
 using System;
 using DilemmaSvc.Application.Common;
 using DilemmaSvc.Application.Queries.GetDilemma;
+using DilemmaSvc.Infrastructure.Postgres;
 using NUnit.Framework;
 
 namespace DilemmaSvc.Application.Tests.UnitTests

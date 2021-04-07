@@ -21,7 +21,7 @@ namespace DilemmaSvc.Application.Queries.GetDilemma
 
         public DTOs.Dilemma Handle(GetDilemmaQuery query)
         {
-            DTOs.Dilemma dilemma = GetDilemmaAndOptions(query);
+            DTOs.Dilemma dilemma = GetDilemmaFromDatabase(query);
             dilemma = GetOptionImageUrls(dilemma);
             
             return dilemma;
@@ -32,13 +32,13 @@ namespace DilemmaSvc.Application.Queries.GetDilemma
             // TODO: Can't modify state of dilemma passed in as arg.
             foreach (Option option in dilemma.Options)
             {
-                option.ImageUrl = _fileStore.GetUrlForObjectKey(option.ImageObjectId);
+                option.ImageUrl = _fileStore.GetUrlForObject(option.ImageObjectId);
             }
 
             return dilemma;
         }
 
-        private DTOs.Dilemma GetDilemmaAndOptions(GetDilemmaQuery query)
+        private DTOs.Dilemma GetDilemmaFromDatabase(GetDilemmaQuery query)
         {
             using (IDbConnection connection = _connectionFactory.GetConnection())
             {
