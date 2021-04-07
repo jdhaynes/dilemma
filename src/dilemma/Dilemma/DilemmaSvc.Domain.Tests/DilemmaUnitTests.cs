@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace DilemmaSvc.Domain.Tests
 {
     [TestFixture]
-    public class DilemmaTests
+    public class DilemmaUnitTests
     {
         [Test]
         public void Test()
