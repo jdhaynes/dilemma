@@ -7,7 +7,7 @@ using DilemmaSvc.Application.Queries.GetDilemma.DTOs;
 
 namespace DilemmaSvc.Application.Queries.GetDilemma
 {
-    public class GetDilemmaQueryHandler : IQueryHandler<GetDilemmaQuery, DTOs.Dilemma>
+    public class GetDilemmaQueryHandler : IRequestHandler<GetDilemmaQuery, DTOs.Dilemma>
     {
         private readonly ISqlConnectionFactory _connectionFactory;
         private readonly IFileStore _fileStore;

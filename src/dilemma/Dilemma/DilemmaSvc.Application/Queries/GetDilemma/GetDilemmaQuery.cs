@@ -3,7 +3,7 @@ using Common.Application;
 
 namespace DilemmaSvc.Application.Queries.GetDilemma
 {
-    public class GetDilemmaQuery : IQuery<DTOs.Dilemma>
+    public class GetDilemmaQuery : IRequest<DTOs.Dilemma>
     {
         public Guid DilemmaId { get; }
 

@@ -8,7 +8,7 @@ using DilemmaSvc.Application.Queries.GetTopics.DTOs;
 
 namespace DilemmaSvc.Application.Queries.GetTopics
 {
-    public class GetTopicsQueryHandler : IQueryHandler<GetTopicsQuery, ICollection<Topic>>
+    public class GetTopicsQueryHandler : IRequestHandler<GetTopicsQuery, ICollection<Topic>>
     {
         private ISqlConnectionFactory _connectionFactory;
 

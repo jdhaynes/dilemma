@@ -4,7 +4,7 @@ using DilemmaSvc.Application.Queries.GetTopics.DTOs;
 
 namespace DilemmaSvc.Application.Queries.GetTopics
 {
-    public class GetTopicsQuery : IQuery<ICollection<Topic>>
+    public class GetTopicsQuery : IRequest<ICollection<Topic>>
     {
         // Currently no query parameters.
     }
