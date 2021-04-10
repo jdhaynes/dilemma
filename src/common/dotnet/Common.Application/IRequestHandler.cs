@@ -4,4 +4,5 @@ namespace DilemmaApp.Services.Common.Application
     {
         TResult Handle(TRequest request);
     }
+    
 }
