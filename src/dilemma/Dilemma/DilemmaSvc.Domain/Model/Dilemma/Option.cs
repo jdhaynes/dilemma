@@ -5,12 +5,14 @@ namespace DilemmaSvc.Domain.Model.Dilemma
     public class Option
     {
         public Guid Id { get; }
-        public OptionContent Content { get; }
+        public Guid ImageId { get; }
+        public string Description { get; }
 
-        public Option(Guid id, OptionContent content)
+        public Option(Guid id, Guid imageId, string description)
         {
             Id = id;
-            Content = content;
+            ImageId = imageId;
+            Description = description;
         }
     }
 }

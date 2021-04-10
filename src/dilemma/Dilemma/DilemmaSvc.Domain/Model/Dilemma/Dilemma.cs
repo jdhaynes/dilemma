@@ -62,14 +62,14 @@ namespace DilemmaSvc.Domain.Model.Dilemma
             return dilemma;
         }
 
-        public void AddOption(Guid optionId, string description, byte[] image)
+        public void AddOption(Guid optionId, Guid imageId, string description)
         {
             if (OptionCount > MaxNumberOptions)
             {
                 throw new DomainRuleException("TOO_MANY_OPTIONS");
             }
 
-            _options.Add(new Option(optionId, new OptionContent(description, image)));
+            _options.Add(new Option(optionId, imageId, description));
         }
 
         public void RemoveOption(Guid optionId)
