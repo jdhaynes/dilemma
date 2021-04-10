@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using Common.Domain;
 using DilemmaSvc.Domain.Events.Dilemma;
@@ -8,43 +9,57 @@ namespace DilemmaSvc.Domain.Model.Dilemma
 {
     public class Dilemma : Entity
     {
-        private const int MinNumberOptions = 2;
-        private const int MaxNumberOptions = 4;
-
         public Guid Id { get; private set; }
         public Guid TopicId { get; private set; }
-        public Poster Poster { get; private set; }
+        public Guid PosterId { get; private set; }
         public string Question { get; private set; }
-        public DateTime? PostedDate { get; private set; }
+        public DateTime PostedDate { get; private set; }
 
-        public bool IsWithdrawn { get; private set; }
+        public bool IsWithdrawn => (WithdrawnDate == null);
         public DateTime? WithdrawnDate { get; private set; }
 
         private List<Option> _options;
         public IReadOnlyCollection<Option> Options => _options.AsReadOnly();
         public int OptionCount => _options.Count;
-        private List<Guid> OptionIds => Options.Select(x => x.Id).ToList();
+
+        private const int MinNumberOptions = 2;
+        private const int MaxNumberOptions = 4;
 
         private Dilemma()
         {
             // No public constructor - consumer of domain must be instantiated
             // through factory methods.
         }
-        
-        public void Post()
+
+        public static Dilemma PostDilemmaToTopic(Guid id, Guid topicId, Guid posterId,
+            string question, List<Option> options)
         {
-            if (OptionCount < MinNumberOptions)
+            Dilemma dilemma = new Dilemma()
+            {
+                Id = id,
+                TopicId = topicId,
+                PosterId = posterId,
+                Question = question,
+                PostedDate = DateTime.Now,
+                WithdrawnDate = null,
+                _options = options
+            };
+
+            if (dilemma.OptionCount < MinNumberOptions)
             {
                 throw new DomainRuleException("TOO_FEW_OPTIONS");
             }
 
-            if (OptionCount > MaxNumberOptions)
+            if (dilemma.OptionCount > MaxNumberOptions)
             {
                 throw new DomainRuleException("TOO_MANY_OPTIONS");
             }
 
-            PostedDate = DateTime.Now;
-            RaiseDomainEvent(new DilemmaPostedEvent(Id, OptionIds));
+            DilemmaPostedEvent postedEvent = new DilemmaPostedEvent(dilemma.Id, dilemma.PosterId,
+                dilemma._options.Select(x => x.Id).ToList());
+            dilemma.RaiseDomainEvent(postedEvent);
+
+            return dilemma;
         }
 
         public void AddOption(Guid optionId, string description, byte[] image)
@@ -53,12 +68,17 @@ namespace DilemmaSvc.Domain.Model.Dilemma
             {
                 throw new DomainRuleException("TOO_MANY_OPTIONS");
             }
-            
+
             _options.Add(new Option(optionId, new OptionContent(description, image)));
         }
 
         public void RemoveOption(Guid optionId)
         {
+            if (OptionCount - 1 < MinNumberOptions)
+            {
+                throw new DomainRuleException("TOO_FEW_OPTIONS");
+            }
+
             Option option = _options.SingleOrDefault(o => o.Id == optionId);
             if (option != null)
             {
@@ -73,9 +93,7 @@ namespace DilemmaSvc.Domain.Model.Dilemma
         public void Withdraw()
         {
             DateTime withdrawnDate = DateTime.Now;
-
             WithdrawnDate = withdrawnDate;
-            IsWithdrawn = true;
 
             RaiseDomainEvent(new DilemmaWithdrawnEvent(Id, withdrawnDate));
         }

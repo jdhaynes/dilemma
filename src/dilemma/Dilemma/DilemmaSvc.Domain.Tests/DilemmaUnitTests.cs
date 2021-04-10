@@ -1,4 +1,5 @@
 ﻿using System;
+using DilemmaSvc.Domain.Model.Dilemma;
 using NUnit.Framework;
 
 namespace DilemmaSvc.Domain.Tests
