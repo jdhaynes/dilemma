@@ -1,9 +1,8 @@
 using System.Data;
-using DilemmaSvc.Application.Common;
-using DilemmaSvc.Application.Interfaces;
+using DilemmaApp.Services.Dilemma.Application.Interfaces;
 using Npgsql;
 
-namespace DilemmaSvc.Infrastructure.Postgres
+namespace DilemmaApp.Services.Dilemma.Infrastructure.Postgres
 {
     public class PostgresConnectionFactory : ISqlConnectionFactory
     {

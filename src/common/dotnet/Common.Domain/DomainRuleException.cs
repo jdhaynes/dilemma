@@ -1,6 +1,6 @@
 using System;
 
-namespace Common.Domain
+namespace DilemmaApp.Services.Common.Domain
 {
     public class DomainRuleException : Exception
     {

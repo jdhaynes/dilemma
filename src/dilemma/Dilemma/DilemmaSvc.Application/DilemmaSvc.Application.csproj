@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>DilemmaApp.Services.Dilemma.Application</AssemblyName>
+        <RootNamespace>DilemmaApp.Services.Dilemma.Application</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

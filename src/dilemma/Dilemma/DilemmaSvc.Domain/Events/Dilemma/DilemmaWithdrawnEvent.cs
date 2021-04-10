@@ -1,7 +1,7 @@
 using System;
-using Common.Domain;
+using DilemmaApp.Services.Common.Domain;
 
-namespace DilemmaSvc.Domain.Events.Dilemma
+namespace DilemmaApp.Services.Dilemma.Domain.Events.Dilemma
 {
     public class DilemmaWithdrawnEvent : IDomainEvent
     {

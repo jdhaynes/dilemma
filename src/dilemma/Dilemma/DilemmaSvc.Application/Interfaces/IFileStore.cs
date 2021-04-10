@@ -1,4 +1,4 @@
-namespace DilemmaSvc.Application.Common
+namespace DilemmaApp.Services.Dilemma.Application.Interfaces
 {
     public interface IFileStore
     {

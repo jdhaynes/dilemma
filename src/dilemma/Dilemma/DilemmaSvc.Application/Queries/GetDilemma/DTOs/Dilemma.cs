@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DilemmaSvc.Application.Queries.GetDilemma.DTOs
+namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs
 {
     public class Dilemma
     {

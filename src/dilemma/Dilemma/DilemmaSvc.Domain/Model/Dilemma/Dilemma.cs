@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
-using Common.Domain;
-using DilemmaSvc.Domain.Events.Dilemma;
+using DilemmaApp.Services.Common.Domain;
+using DilemmaApp.Services.Dilemma.Domain.Events.Dilemma;
 
-namespace DilemmaSvc.Domain.Model.Dilemma
+namespace DilemmaApp.Services.Dilemma.Domain.Model.Dilemma
 {
     public class Dilemma : Entity
     {

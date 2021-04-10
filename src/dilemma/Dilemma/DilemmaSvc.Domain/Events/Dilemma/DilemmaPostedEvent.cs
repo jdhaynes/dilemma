@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Common.Domain;
+using DilemmaApp.Services.Common.Domain;
 
-namespace DilemmaSvc.Domain.Events.Dilemma
+namespace DilemmaApp.Services.Dilemma.Domain.Events.Dilemma
 {
     public class DilemmaPostedEvent : IDomainEvent
     {

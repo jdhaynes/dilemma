@@ -1,4 +1,4 @@
-namespace DilemmaSvc.Application.Commands.PostDilemmaToTopic
+namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemmaToTopic
 {
     public class PostDilemmaToTopicCommandHandler
     {

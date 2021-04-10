@@ -1,8 +1,6 @@
-﻿using System;
-using DilemmaSvc.Domain.Model.Dilemma;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace DilemmaSvc.Domain.Tests
+namespace DilemmaApp.Services.Dilemma.Domain.Tests
 {
     [TestFixture]
     public class DilemmaUnitTests

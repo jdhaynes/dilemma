@@ -1,7 +1,7 @@
 using System;
-using Common.Application;
+using DilemmaApp.Services.Common.Application;
 
-namespace DilemmaSvc.Application.Queries.GetDilemma
+namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
 {
     public class GetDilemmaQuery : IRequest<DTOs.Dilemma>
     {

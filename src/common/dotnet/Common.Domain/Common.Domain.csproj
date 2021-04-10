@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>DilemmaApp.Services.Common.Domain</AssemblyName>
+        <RootNamespace>DilemmaApp.Services.Common.Domain</RootNamespace>
     </PropertyGroup>
 
 </Project>

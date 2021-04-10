@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Common.Application;
 using Dapper;
-using DilemmaSvc.Application.Common;
-using DilemmaSvc.Application.Interfaces;
-using DilemmaSvc.Application.Queries.GetTopics.DTOs;
+using DilemmaApp.Services.Common.Application;
+using DilemmaApp.Services.Dilemma.Application.Interfaces;
+using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics.DTOs;
 
-namespace DilemmaSvc.Application.Queries.GetTopics
+namespace DilemmaApp.Services.Dilemma.Application.Queries.GetTopics
 {
     public class GetTopicsQueryHandler : IRequestHandler<GetTopicsQuery, ICollection<Topic>>
     {

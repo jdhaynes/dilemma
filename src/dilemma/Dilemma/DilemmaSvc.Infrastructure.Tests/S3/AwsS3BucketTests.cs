@@ -1,8 +1,8 @@
 using System;
-using DilemmaSvc.Infrastructure.S3;
+using DilemmaApp.Services.Dilemma.Infrastructure.S3;
 using NUnit.Framework;
 
-namespace DilemmaSvc.Infrastructure.Tests.S3
+namespace DilemmaApp.Services.Dilemma.Infrastructure.Tests.S3
 {
     [TestFixture]
     public class AwsS3BucketTests

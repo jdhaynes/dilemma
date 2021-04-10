@@ -1,7 +1,7 @@
-namespace Common.Application
+namespace DilemmaApp.Services.Common.Application
 {
-    public interface IRequestHandler<TQuery, TResult> where TQuery : IRequest<TResult>
+    public interface IRequestHandler<in TRequest, TResult> where TRequest : IRequest<TResult>
     {
-        TResult Handle(TQuery query);
+        TResult Handle(TRequest request);
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Common.Domain
+namespace DilemmaApp.Services.Common.Domain
 {
     public class Entity
     {

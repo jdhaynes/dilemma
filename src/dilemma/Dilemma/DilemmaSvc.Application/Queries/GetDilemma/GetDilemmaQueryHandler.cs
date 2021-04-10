@@ -1,12 +1,11 @@
 using System.Data;
 using System.Linq;
-using Common.Application;
 using Dapper;
-using DilemmaSvc.Application.Common;
-using DilemmaSvc.Application.Interfaces;
-using DilemmaSvc.Application.Queries.GetDilemma.DTOs;
+using DilemmaApp.Services.Common.Application;
+using DilemmaApp.Services.Dilemma.Application.Interfaces;
+using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs;
 
-namespace DilemmaSvc.Application.Queries.GetDilemma
+namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
 {
     public class GetDilemmaQueryHandler : IRequestHandler<GetDilemmaQuery, DTOs.Dilemma>
     {

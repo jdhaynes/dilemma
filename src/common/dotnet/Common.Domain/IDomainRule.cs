@@ -1,4 +1,4 @@
-namespace Common.Domain
+namespace DilemmaApp.Services.Common.Domain
 {
     /// <summary>
     /// Contract for objects responsible for checking a domain business rule.

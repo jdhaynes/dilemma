@@ -1,6 +1,6 @@
 using System;
 
-namespace DilemmaSvc.Application.Queries.GetTopics.DTOs
+namespace DilemmaApp.Services.Dilemma.Application.Queries.GetTopics.DTOs
 {
     public class Topic
     {

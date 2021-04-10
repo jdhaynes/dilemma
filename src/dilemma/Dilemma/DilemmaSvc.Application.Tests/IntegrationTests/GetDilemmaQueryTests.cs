@@ -1,11 +1,9 @@
 using System;
-using DilemmaSvc.Application.Common;
-using DilemmaSvc.Application.Queries.GetDilemma;
-using DilemmaSvc.Infrastructure.Postgres;
-using Moq;
+using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
+using DilemmaApp.Services.Dilemma.Infrastructure.Postgres;
 using NUnit.Framework;
 
-namespace DilemmaSvc.Application.Tests.IntegrationTests
+namespace DilemmaApp.Services.Dilemma.Application.Tests.IntegrationTests
 {
     [TestFixture]
     public class GetDilemmaQueryTests

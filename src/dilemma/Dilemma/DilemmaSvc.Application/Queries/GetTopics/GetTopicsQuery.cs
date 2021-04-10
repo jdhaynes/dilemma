@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Common.Application;
-using DilemmaSvc.Application.Queries.GetTopics.DTOs;
+using DilemmaApp.Services.Common.Application;
+using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics.DTOs;
 
-namespace DilemmaSvc.Application.Queries.GetTopics
+namespace DilemmaApp.Services.Dilemma.Application.Queries.GetTopics
 {
     public class GetTopicsQuery : IRequest<ICollection<Topic>>
     {

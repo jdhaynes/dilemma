@@ -1,7 +1,7 @@
 using System;
-using DilemmaSvc.Application.Common;
+using DilemmaApp.Services.Dilemma.Application.Interfaces;
 
-namespace DilemmaSvc.Infrastructure.S3
+namespace DilemmaApp.Services.Dilemma.Infrastructure.S3
 {
     public class AwsS3Bucket : IFileStore
     {

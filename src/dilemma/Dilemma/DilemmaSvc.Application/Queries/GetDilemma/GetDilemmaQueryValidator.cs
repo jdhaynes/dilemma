@@ -1,7 +1,7 @@
 using System;
 using FluentValidation;
 
-namespace DilemmaSvc.Application.Queries.GetDilemma
+namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
 {
     public class GetDilemmaQueryValidator: AbstractValidator<GetDilemmaQuery>
     {

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Npgsql;
 
-namespace DilemmaSvc.Infrastructure.Tests
+namespace DilemmaApp.Services.Dilemma.Infrastructure.Tests.PostgresDb
 {
     public class TestDatabase : IDisposable
     {

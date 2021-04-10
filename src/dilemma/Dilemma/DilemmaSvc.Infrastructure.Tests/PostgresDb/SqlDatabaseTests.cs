@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using NUnit.Framework;
 
-namespace DilemmaSvc.Infrastructure.Tests
+namespace DilemmaApp.Services.Dilemma.Infrastructure.Tests.PostgresDb
 {
     [TestFixture]
     public class SqlDatabaseTests
