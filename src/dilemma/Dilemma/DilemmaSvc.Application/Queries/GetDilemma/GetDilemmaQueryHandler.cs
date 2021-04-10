@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Application;
 using Dapper;
 using DilemmaSvc.Application.Common;
+using DilemmaSvc.Application.Interfaces;
 using DilemmaSvc.Application.Queries.GetDilemma.DTOs;
 
 namespace DilemmaSvc.Application.Queries.GetDilemma

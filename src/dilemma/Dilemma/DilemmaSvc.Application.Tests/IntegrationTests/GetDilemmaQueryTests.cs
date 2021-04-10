@@ -2,20 +2,25 @@ using System;
 using DilemmaSvc.Application.Common;
 using DilemmaSvc.Application.Queries.GetDilemma;
 using DilemmaSvc.Infrastructure.Postgres;
+using Moq;
 using NUnit.Framework;
 
-namespace DilemmaSvc.Application.Tests.UnitTests
+namespace DilemmaSvc.Application.Tests.IntegrationTests
 {
     [TestFixture]
     public class GetDilemmaQueryTests
     {
         private GetDilemmaQueryHandler _handler;
-        private string _connString = "User ID=dev;Password=Dev_!=;Host=localhost;Port=25522;Database=dilemma_svc";
+
+        private string _connString =
+            "User ID=dev;Password=Dev_!=;Host=localhost;Port=25522;Database=dilemma_svc";
 
         [SetUp]
         public void Setup()
         {
-            PostgresConnectionFactory connectionFactory = new PostgresConnectionFactory(_connString);
+            PostgresConnectionFactory connectionFactory =
+                new PostgresConnectionFactory(_connString);
+
             _handler = new GetDilemmaQueryHandler(connectionFactory);
         }
 

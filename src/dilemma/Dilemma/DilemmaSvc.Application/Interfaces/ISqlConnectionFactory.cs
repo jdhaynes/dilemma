@@ -1,7 +1,6 @@
 using System.Data;
-using System.Data.SqlClient;
 
-namespace DilemmaSvc.Application.Common
+namespace DilemmaSvc.Application.Interfaces
 {
     public interface ISqlConnectionFactory
     {

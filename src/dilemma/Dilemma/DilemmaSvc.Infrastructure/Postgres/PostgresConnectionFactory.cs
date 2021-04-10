@@ -1,5 +1,6 @@
 using System.Data;
 using DilemmaSvc.Application.Common;
+using DilemmaSvc.Application.Interfaces;
 using Npgsql;
 
 namespace DilemmaSvc.Infrastructure.Postgres

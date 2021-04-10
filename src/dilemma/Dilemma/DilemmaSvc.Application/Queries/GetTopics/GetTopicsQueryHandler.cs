@@ -4,6 +4,7 @@ using System.Linq;
 using Common.Application;
 using Dapper;
 using DilemmaSvc.Application.Common;
+using DilemmaSvc.Application.Interfaces;
 using DilemmaSvc.Application.Queries.GetTopics.DTOs;
 
 namespace DilemmaSvc.Application.Queries.GetTopics

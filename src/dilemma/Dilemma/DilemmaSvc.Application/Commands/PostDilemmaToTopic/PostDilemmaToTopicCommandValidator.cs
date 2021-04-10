@@ -12,12 +12,11 @@ namespace DilemmaSvc.Application.Commands.PostDilemmaToTopic
             RuleFor(x => x.Question).NotNull();
             RuleFor(x => x.Question).NotEmpty();
             RuleFor(x => x.Question).Length(140);
-
             RuleFor(x => x.Options).NotNull();
             RuleForEach(x => x.Options).SetValidator(new OptionValidator());
         }
 
-        public class OptionValidator : AbstractValidator<PostDilemmaToTopicCommand.Option>
+        private class OptionValidator : AbstractValidator<PostDilemmaToTopicCommand.Option>
         {
             public OptionValidator()
             {

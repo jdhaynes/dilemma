@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dilemma.Domain
+namespace DilemmaSvc.Domain.Model.Topic
 {
     public class Topic
     {

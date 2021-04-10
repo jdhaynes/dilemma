@@ -63,7 +63,6 @@ namespace DilemmaSvc.Infrastructure.Tests.S3
         public void GivenNullOrEmptyKeyWhenGetObjectUrlShouldThrow()
         {
             AwsS3Bucket bucket = new AwsS3Bucket("test-bucket", "eu-west-2");
-            Assert.Throws<ArgumentException>(() => { bucket.GetUrlForObject(null); });
 
             Assert.Multiple(() =>
             {

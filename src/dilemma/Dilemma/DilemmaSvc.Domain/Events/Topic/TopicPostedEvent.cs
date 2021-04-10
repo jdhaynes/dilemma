@@ -1,7 +1,7 @@
 using System;
 using Common.Domain;
 
-namespace Dilemma.Rules
+namespace DilemmaSvc.Domain.Events.Topic
 {
     public class TopicPostedEvent : IDomainEvent
     {

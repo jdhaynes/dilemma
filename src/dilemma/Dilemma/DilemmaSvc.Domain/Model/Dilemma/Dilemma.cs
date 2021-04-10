@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Domain;
-using Dilemma.Rules;
+using DilemmaSvc.Domain.Events.Dilemma;
 
-namespace Dilemma.Domain
+namespace DilemmaSvc.Domain.Model.Dilemma
 {
     public class Dilemma : Entity
     {
@@ -15,38 +15,22 @@ namespace Dilemma.Domain
         public Guid TopicId { get; private set; }
         public Poster Poster { get; private set; }
         public string Question { get; private set; }
-        public Nullable<DateTime> PostedDate { get; private set; }
+        public DateTime? PostedDate { get; private set; }
 
         public bool IsWithdrawn { get; private set; }
-        public Nullable<DateTime> WithdrawnDate { get; private set; }
+        public DateTime? WithdrawnDate { get; private set; }
 
         private List<Option> _options;
         public IReadOnlyCollection<Option> Options => _options.AsReadOnly();
         public int OptionCount => _options.Count;
-        private List<Guid> _optionIds => Options.Select(x => x.Id).ToList();
+        private List<Guid> OptionIds => Options.Select(x => x.Id).ToList();
 
         private Dilemma()
         {
             // No public constructor - consumer of domain must be instantiated
             // through factory methods.
         }
-
-        public static Dilemma StartDraft(Guid id, Guid topicId, string question, Poster poster)
-        {
-            Dilemma dilemma = new Dilemma
-            {
-                Id = id,
-                TopicId = topicId,
-                Question = question,
-                PostedDate = null,
-                WithdrawnDate = null,
-                Poster = poster,
-                _options = new List<Option>(),
-            };
-
-            return dilemma;
-        }
-
+        
         public void Post()
         {
             if (OptionCount < MinNumberOptions)
@@ -60,7 +44,7 @@ namespace Dilemma.Domain
             }
 
             PostedDate = DateTime.Now;
-            RaiseDomainEvent(new DilemmaPostedEvent(Id, _optionIds));
+            RaiseDomainEvent(new DilemmaPostedEvent(Id, OptionIds));
         }
 
         public void AddOption(Guid optionId, string description, byte[] image)
@@ -71,6 +55,19 @@ namespace Dilemma.Domain
             }
             
             _options.Add(new Option(optionId, new OptionContent(description, image)));
+        }
+
+        public void RemoveOption(Guid optionId)
+        {
+            Option option = _options.SingleOrDefault(o => o.Id == optionId);
+            if (option != null)
+            {
+                _options.Remove(option);
+            }
+            else
+            {
+                throw new DomainRuleException("OPTION_DOESNT_EXIST");
+            }
         }
 
         public void Withdraw()

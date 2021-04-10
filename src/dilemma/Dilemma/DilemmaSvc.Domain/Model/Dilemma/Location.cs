@@ -1,4 +1,4 @@
-namespace Dilemma.Domain
+namespace DilemmaSvc.Domain.Model.Dilemma
 {
     public class Location
     {

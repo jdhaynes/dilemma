@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common.Domain;
 
-namespace Dilemma.Rules
+namespace DilemmaSvc.Domain.Events.Dilemma
 {
     public class DilemmaPostedEvent : IDomainEvent
     {
