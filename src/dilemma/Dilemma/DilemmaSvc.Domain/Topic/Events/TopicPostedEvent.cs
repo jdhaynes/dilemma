@@ -1,7 +1,7 @@
 using System;
 using DilemmaApp.Services.Common.Domain;
 
-namespace DilemmaApp.Services.Dilemma.Domain.Events.Topic
+namespace DilemmaApp.Services.Dilemma.Domain.Topic.Events
 {
     public class TopicPostedEvent : IDomainEvent
     {

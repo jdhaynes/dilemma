@@ -1,6 +1,6 @@
 namespace DilemmaApp.Services.Common.Application
 {
-    public interface ICommand
+    public interface ICommand<TResult> : IRequest<TResult>
     {
     }
 }

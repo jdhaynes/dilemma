@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using DilemmaApp.Services.Common.Application;
 
-namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemmaToTopic
+namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma
 {
-    public class PostDilemmaToTopicCommand 
+    public class PostDilemmaCommand : ICommand<PostDilemmaCommandResult>
     {
         public Guid TopicId { get; set; }
         public Guid PosterId { get; set; }

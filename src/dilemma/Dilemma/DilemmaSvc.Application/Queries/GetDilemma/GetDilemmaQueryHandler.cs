@@ -32,7 +32,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
             // TODO: Can't modify state of dilemma passed in as arg.
             foreach (Option option in dilemma.Options)
             {
-                option.ImageUrl = _fileStore.GetUrlForObject(option.ImageObjectId);
+                option.ImageUrl = _fileStore.GetPublicUrlForObject(option.ImageObjectId);
             }
 
             return dilemma;

@@ -20,7 +20,7 @@ namespace DilemmaApp.Services.Dilemma.Infrastructure.Tests.S3
         public void GivenObjectKeyWhenGetObjectUrlShouldReturnCorrectFormattedUrl()
         {
             AwsS3Bucket bucket = new AwsS3Bucket("test-bucket", "eu-west-2");
-            string objectUrl = bucket.GetUrlForObject("test.txt");
+            string objectUrl = bucket.GetPublicUrlForObject("test.txt");
 
             Assert.AreEqual("https://test-bucket.s3.eu-west-2.amazonaws.com/test.txt", objectUrl);
         }
@@ -66,10 +66,10 @@ namespace DilemmaApp.Services.Dilemma.Infrastructure.Tests.S3
 
             Assert.Multiple(() =>
             {
-                Assert.Throws<ArgumentException>(() => { bucket.GetUrlForObject(null); });
+                Assert.Throws<ArgumentException>(() => { bucket.GetPublicUrlForObject(null); });
                 Assert.Throws<ArgumentException>(() =>
                 {
-                    bucket.GetUrlForObject(String.Empty);
+                    bucket.GetPublicUrlForObject(String.Empty);
                 });
             });
         }

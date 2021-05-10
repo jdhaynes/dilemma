@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DilemmaApp.Services.Common.Domain;
-using DilemmaApp.Services.Dilemma.Domain.Events.Dilemma;
+using DilemmaApp.Services.Dilemma.Domain.Dilemma.Events;
 
 namespace DilemmaApp.Services.Dilemma.Domain.Model.Dilemma
 {

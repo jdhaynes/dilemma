@@ -1,7 +1,7 @@
 using System;
 using DilemmaApp.Services.Common.Domain;
 
-namespace DilemmaApp.Services.Dilemma.Domain.Model.OptionImage
+namespace DilemmaApp.Services.Dilemma.Domain.OptionImage
 {
     public class OptionImage : Entity
     {

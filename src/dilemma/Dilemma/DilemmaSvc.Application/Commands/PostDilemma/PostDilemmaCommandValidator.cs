@@ -1,11 +1,11 @@
 using System;
 using FluentValidation;
 
-namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemmaToTopic
+namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma
 {
-    public class PostDilemmaToTopicCommandValidator : AbstractValidator<PostDilemmaToTopicCommand>
+    public class PostDilemmaCommandValidator : AbstractValidator<PostDilemmaCommand>
     {
-        public PostDilemmaToTopicCommandValidator()
+        public PostDilemmaCommandValidator()
         {
             RuleFor(x => x.TopicId).NotEqual(Guid.Empty);
             RuleFor(x => x.PosterId).NotEqual(Guid.Empty);
@@ -16,7 +16,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemmaToTopic
             RuleForEach(x => x.Options).SetValidator(new OptionValidator());
         }
 
-        private class OptionValidator : AbstractValidator<PostDilemmaToTopicCommand.Option>
+        private class OptionValidator : AbstractValidator<PostDilemmaCommand.Option>
         {
             public OptionValidator()
             {

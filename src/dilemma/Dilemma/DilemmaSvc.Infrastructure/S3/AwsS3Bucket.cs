@@ -25,7 +25,7 @@ namespace DilemmaApp.Services.Dilemma.Infrastructure.S3
             _region = region;
         }
 
-        public string GetUrlForObject(string key)
+        public string GetPublicUrlForObject(string key)
         {
             if (String.IsNullOrEmpty(key))
             {
