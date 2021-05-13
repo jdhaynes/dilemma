@@ -4,7 +4,7 @@ using System.Linq;
 using DilemmaApp.Services.Common.Domain;
 using DilemmaApp.Services.Dilemma.Domain.Dilemma.Events;
 
-namespace DilemmaApp.Services.Dilemma.Domain.Model.Dilemma
+namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
 {
     public class Dilemma : Entity
     {
@@ -14,7 +14,7 @@ namespace DilemmaApp.Services.Dilemma.Domain.Model.Dilemma
         public string Question { get; private set; }
         public DateTime PostedDate { get; private set; }
 
-        public bool IsWithdrawn => (WithdrawnDate == null);
+        public bool IsWithdrawn => (WithdrawnDate != null);
         public DateTime? WithdrawnDate { get; private set; }
 
         private List<Option> _options;
@@ -61,14 +61,14 @@ namespace DilemmaApp.Services.Dilemma.Domain.Model.Dilemma
             return dilemma;
         }
 
-        public void AddOption(Guid optionId, Guid imageId, string description)
+        public void AddOption(Guid optionId, string description)
         {
             if (OptionCount > MaxNumberOptions)
             {
                 throw new DomainRuleException("TOO_MANY_OPTIONS");
             }
 
-            _options.Add(new Option(optionId, imageId, description));
+            _options.Add(new Option(optionId, Id, description));
         }
 
         public void RemoveOption(Guid optionId)

@@ -1,18 +1,23 @@
 using System;
 
-namespace DilemmaApp.Services.Dilemma.Domain.Model.Dilemma
+namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
 {
     public class Option
     {
-        public Guid Id { get; }
-        public Guid ImageId { get; }
-        public string Description { get; }
+        public Guid Id { get; set;}
+        public Guid DilemmaId { get; set;}
+        public string Description { get; set;}
 
-        public Option(Guid id, Guid imageId, string description)
+        public Option(Guid id, Guid dilemmaId, string description)
         {
             Id = id;
-            ImageId = imageId;
+            DilemmaId = dilemmaId;
             Description = description;
+        }
+
+        protected Option()
+        {
+            
         }
     }
 }
