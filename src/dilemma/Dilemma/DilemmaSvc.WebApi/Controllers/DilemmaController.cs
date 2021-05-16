@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs;
+using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics;
+using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +20,17 @@ namespace DilemmaSvc.WebApi.Controllers
         }
 
         [HttpGet]
-        public Dilemma GetDilemma(GetDilemmaQuery query)
+        [Route("dilemmas/{dilemmaId}")]
+        public Dilemma GetDilemma(Guid dilemmaId)
         {
-            var result = new GetDilemmaQueryHandler().Handle(query);
+            return _mediator.Send(new GetDilemmaQuery(dilemmaId)).Result;
+        }
+
+        [HttpGet]
+        [Route("topics")]
+        public ICollection<Topic> GetTopics()
+        {
+            return _mediator.Send(new GetTopicsQuery()).Result;
         }
     }
 }
