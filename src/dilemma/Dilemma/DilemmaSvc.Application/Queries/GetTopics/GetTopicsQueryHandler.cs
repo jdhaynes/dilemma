@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Dapper;
-using DilemmaApp.Services.Common.Application;
 using DilemmaApp.Services.Dilemma.Application.Interfaces;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics.DTOs;
+using MediatR;
 
 namespace DilemmaApp.Services.Dilemma.Application.Queries.GetTopics
 {
@@ -17,7 +19,8 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetTopics
             _connectionFactory = connectionFactory;
         }
 
-        public ICollection<Topic> Handle(GetTopicsQuery query)
+        public async Task<ICollection<Topic>> Handle(GetTopicsQuery query,
+            CancellationToken cancellationToken)
         {
             // TODO: this query result won't change often - cache result?
             using (IDbConnection connection = _connectionFactory.GetConnection())

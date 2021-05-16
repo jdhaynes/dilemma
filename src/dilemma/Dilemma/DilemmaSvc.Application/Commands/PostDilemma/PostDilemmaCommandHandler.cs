@@ -1,10 +1,12 @@
 using System;
-using DilemmaApp.Services.Common.Application;
+using System.Threading;
+using System.Threading.Tasks;
 using DilemmaApp.Services.Dilemma.Application.Interfaces;
+using MediatR;
 
 namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma
 {
-    public class PostDilemmaCommandHandler : ICommandHandler<PostDilemmaCommand,
+    public class PostDilemmaCommandHandler : IRequestHandler<PostDilemmaCommand,
         PostDilemmaCommandResult>
     {
         private IDilemmaRepository _dilemmaRepository;
@@ -14,7 +16,8 @@ namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma
             _dilemmaRepository = dilemmaRepository;
         }
 
-        public PostDilemmaCommandResult Handle(PostDilemmaCommand request)
+        public async Task<PostDilemmaCommandResult> Handle(PostDilemmaCommand request, 
+            CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using DilemmaApp.Services.Common.Application;
+using MediatR;
 
 namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma
 {
-    public class PostDilemmaCommand : ICommand<PostDilemmaCommandResult>
+    public class PostDilemmaCommand : IRequest<PostDilemmaCommandResult>
     {
         public Guid TopicId { get; set; }
         public Guid PosterId { get; set; }

@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DilemmaSvc.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DilemmaSvc.Infrastructure.Tests", "DilemmaSvc.Infrastructure.Tests\DilemmaSvc.Infrastructure.Tests.csproj", "{5FBF4FDF-DE19-459C-BAF1-52F1E0329BE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DilemmaSvc.WebApi", "DilemmaSvc.WebApi\DilemmaSvc.WebApi.csproj", "{9BC0C5AB-4002-4195-91B3-2A5EE3A6BF55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,9 @@ Global
 		{5FBF4FDF-DE19-459C-BAF1-52F1E0329BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FBF4FDF-DE19-459C-BAF1-52F1E0329BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FBF4FDF-DE19-459C-BAF1-52F1E0329BE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BC0C5AB-4002-4195-91B3-2A5EE3A6BF55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BC0C5AB-4002-4195-91B3-2A5EE3A6BF55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BC0C5AB-4002-4195-91B3-2A5EE3A6BF55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BC0C5AB-4002-4195-91B3-2A5EE3A6BF55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
