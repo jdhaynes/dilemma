@@ -6,10 +6,13 @@
 
     <ItemGroup>
       <PackageReference Include="MediatR" Version="9.0.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.5.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DilemmaSvc.Application\DilemmaSvc.Application.csproj" />
+      <ProjectReference Include="..\DilemmaSvc.Infrastructure\DilemmaSvc.Infrastructure.csproj" />
     </ItemGroup>
 
 

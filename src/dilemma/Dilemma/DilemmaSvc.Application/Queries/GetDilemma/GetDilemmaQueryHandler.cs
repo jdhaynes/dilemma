@@ -24,23 +24,9 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
         public async Task<DTOs.Dilemma> Handle(GetDilemmaQuery query, 
             CancellationToken cancellationToken)
         {
-            DTOs.Dilemma dilemma = GetDilemmaFromDatabase(query);
-            dilemma = GetOptionImageUrls(dilemma);
-            
-            return dilemma;
+            return GetDilemmaFromDatabase(query);
         }
-
-        private DTOs.Dilemma GetOptionImageUrls(DTOs.Dilemma dilemma)
-        {
-            // TODO: Can't modify state of dilemma passed in as arg.
-            foreach (Option option in dilemma.Options)
-            {
-                option.ImageUrl = _fileStore.GetPublicUrlForObject(option.ImageObjectId);
-            }
-
-            return dilemma;
-        }
-
+        
         private DTOs.Dilemma GetDilemmaFromDatabase(GetDilemmaQuery query)
         {
             using (IDbConnection connection = _connectionFactory.GetConnection())
@@ -57,8 +43,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
                     WHERE dilemma.id = @DilemmaId;
 
                     SELECT id              AS {nameof(Option.OptionId)},
-	                       description     AS {nameof(Option.Description)},
-	                       image_object_id AS {nameof(Option.ImageObjectId)}
+	                       description     AS {nameof(Option.Description)}
                     FROM option
                     WHERE option.dilemma_id = @DilemmaId;";
 
