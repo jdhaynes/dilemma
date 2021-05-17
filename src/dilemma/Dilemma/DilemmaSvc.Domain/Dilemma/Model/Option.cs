@@ -14,10 +14,5 @@ namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
             DilemmaId = dilemmaId;
             Description = description;
         }
-
-        protected Option()
-        {
-            
-        }
     }
 }

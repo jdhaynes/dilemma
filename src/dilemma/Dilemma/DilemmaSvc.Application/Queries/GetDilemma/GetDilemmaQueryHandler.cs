@@ -35,11 +35,15 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
                 // TODO: Potential to optimise to utilise single query with LEFT JOIN.
 
                 string sql = $@"
-                    SELECT id             AS {nameof(DTOs.Dilemma.DilemmaId)},
-	                       question       AS {nameof(DTOs.Dilemma.Question)},
-	                       posted_date    AS {nameof(DTOs.Dilemma.PostedDate)},
-	                       withdrawn_date AS {nameof(DTOs.Dilemma.WithdrawnDate)}
-                    FROM dilemma
+                    SELECT d.id             AS {nameof(DTOs.Dilemma.DilemmaId)},
+	                       d.question       AS {nameof(DTOs.Dilemma.Question)},
+	                       d.posted_date    AS {nameof(DTOs.Dilemma.PostedDate)},
+	                       d.withdrawn_date AS {nameof(DTOs.Dilemma.WithdrawnDate)},
+                           p.id             AS {nameof(DTOs.Poster.Id)},
+                           p.dob            AS {nameof(DTOs.Poster.DateOfBirth)}
+                    FROM dilemma AS d
+                    LEFT JOIN poster AS p
+                    ON d.poster_id = p.id
                     WHERE dilemma.id = @DilemmaId;
 
                     SELECT id              AS {nameof(Option.OptionId)},
