@@ -54,7 +54,9 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
                     WHERE d.id = @DilemmaId;";
 
                 Dictionary<Guid, DTOs.Dilemma> dict = new Dictionary<Guid, DTOs.Dilemma>();
-                return connection.Query<DTOs.Dilemma, Poster, Option, DTOs.Dilemma>(sql,
+                
+                return connection.Query<DTOs.Dilemma, Poster, Option, DTOs.Dilemma>(
+                        sql,
                         (dilemma, poster, option) =>
                         {
                             DTOs.Dilemma dilemmaEntity;
@@ -70,9 +72,11 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
                             dilemmaEntity.Options.Add(option);
                             return dilemmaEntity;
                         },
-                        splitOn: $"{nameof(DTOs.Dilemma.DilemmaId)},{nameof(DTOs.Poster.PosterId)}",
+                        splitOn: $"{nameof(DTOs.Poster.PosterId)},{nameof(Option.OptionId)}",
                         param: new {DilemmaId = query.DilemmaId})
+                    .Distinct()
                     .SingleOrDefault();
+                
             }
         }
     }
