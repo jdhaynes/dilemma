@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using DilemmaApp.Services.Dilemma.Application.Interfaces;
 
 namespace DilemmaApp.Services.Dilemma.Infrastructure.Postgres
@@ -12,9 +13,9 @@ namespace DilemmaApp.Services.Dilemma.Infrastructure.Postgres
             _context = context;
         }
         
-        public void GetDilemma(Guid id)
+        public Domain.Dilemma.Model.Dilemma GetDilemma(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Dilemmas.Single(d => d.Id == id);
         }
 
         public void AddDilemma(Domain.Dilemma.Model.Dilemma dilemma)
@@ -25,12 +26,14 @@ namespace DilemmaApp.Services.Dilemma.Infrastructure.Postgres
 
         public void UpdateDilemma(Domain.Dilemma.Model.Dilemma dilemma)
         {
-            throw new NotImplementedException();
+            _context.Dilemmas.Update(dilemma);
+            _context.SaveChanges();
         }
 
-        public void DeleteDilemma(Guid id)
+        public void DeleteDilemma(Domain.Dilemma.Model.Dilemma dilemma)
         {
-            throw new NotImplementedException();
+            _context.Dilemmas.Remove(dilemma);
+            _context.SaveChanges();
         }
     }
 }
