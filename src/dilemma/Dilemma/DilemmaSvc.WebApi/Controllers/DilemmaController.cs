@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
 using DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma;
+using DilemmaApp.Services.Dilemma.Application.Commands.WithdrawDilemma;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs;
-using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics;
-using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace DilemmaSvc.WebApi.Controllers
 {
@@ -26,19 +25,21 @@ namespace DilemmaSvc.WebApi.Controllers
         {
             return _mediator.Send(new GetDilemmaQuery(dilemmaId)).Result;
         }
-
-        [HttpGet]
-        [Route("topics")]
-        public ICollection<Topic> GetTopics()
-        {
-            return _mediator.Send(new GetTopicsQuery()).Result;
-        }
-
+        
         [HttpPost]
         [Route("dilemmas")]
         public PostDilemmaCommandResult PostDilemma(PostDilemmaCommand request)
         {
             return _mediator.Send(request).Result;
+        }
+
+        [HttpPut]
+        [Route("dilemmas/{dilemmaId}/withdraw")]
+        public ActionResult WithdrawDilemma(Guid dilemmaId)
+        {
+            _mediator.Send(new WithdrawDilemmaCommand(dilemmaId));
+
+            return Ok();
         }
     }
 }

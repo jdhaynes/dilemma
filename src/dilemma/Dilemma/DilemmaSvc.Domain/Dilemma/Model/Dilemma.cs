@@ -85,6 +85,11 @@ namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
 
         public void Withdraw()
         {
+            if (IsWithdrawn)
+            {
+                throw new DomainRuleException("ALREADY_WITHDRAWN");
+            }
+            
             DateTime withdrawnDate = DateTime.Now;
             WithdrawnDate = withdrawnDate;
 
