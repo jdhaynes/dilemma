@@ -16,10 +16,21 @@ namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma
             _dilemmaRepository = dilemmaRepository;
         }
 
-        public async Task<PostDilemmaCommandResult> Handle(PostDilemmaCommand request, 
+        public async Task<PostDilemmaCommandResult> Handle(PostDilemmaCommand request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Domain.Dilemma.Model.Dilemma dilemma = new Domain.Dilemma.Model.Dilemma(
+                Guid.NewGuid(),
+                request.TopicId, 
+                request.PosterId, 
+                request.Question);
+            
+            request.Options.ForEach(o => dilemma.AddOption(Guid.NewGuid(), o.Description));
+            dilemma.PostToTopic();
+
+            _dilemmaRepository.AddDilemma(dilemma);
+            
+            return new PostDilemmaCommandResult() {DilemmaId = dilemma.Id};
         }
     }
-} 
+}

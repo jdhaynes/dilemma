@@ -32,14 +32,14 @@ namespace DilemmaSvc.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IDilemmaRepository, DilemmaRepository>();
+            services.AddScoped<IDilemmaRepository, PostgresDilemmaRepository>();
             services.AddScoped<ISqlConnectionFactory>(_ =>
                 new PostgresConnectionFactory(
                     Configuration["Infrastructure:Postgres:ConnectionString"]));
             services.AddScoped<IFileStore>(_ =>
                 new AwsS3Bucket(Configuration["Infrastructure:S3:BaseURL"],
                     Configuration["Infrastructure:S3:Region"]));
-            
+
             services.AddMediatR(typeof(GetDilemmaQuery).Assembly);
 
             services.AddDbContext<DilemmaContext>(options =>

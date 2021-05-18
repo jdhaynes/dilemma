@@ -26,39 +26,33 @@ namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
 
         private Dilemma()
         {
-            // No public constructor - consumer of domain must be instantiated
-            // through factory methods.
         }
 
-        public static Dilemma PostDilemmaToTopic(Guid id, Guid topicId, Guid posterId,
-            string question, List<Option> options)
+        public Dilemma(Guid id, Guid topicId, Guid posterId, string question)
         {
-            Dilemma dilemma = new Dilemma()
-            {
-                Id = id,
-                TopicId = topicId,
-                PosterId = posterId,
-                Question = question,
-                PostedDate = DateTime.Now,
-                WithdrawnDate = null,
-                _options = options
-            };
+            Id = id;
+            TopicId = topicId;
+            PosterId = posterId;
+            Question = question;
+            WithdrawnDate = null;
+            _options = new List<Option>();
+        }
 
-            if (dilemma.OptionCount < MinNumberOptions)
-            {
-                throw new DomainRuleException("TOO_FEW_OPTIONS");
-            }
-
-            if (dilemma.OptionCount > MaxNumberOptions)
+        public void PostToTopic()
+        {
+            if (OptionCount > MaxNumberOptions)
             {
                 throw new DomainRuleException("TOO_MANY_OPTIONS");
             }
 
-            DilemmaPostedEvent postedEvent = new DilemmaPostedEvent(dilemma.Id, dilemma.PosterId,
-                dilemma._options.Select(x => x.Id).ToList());
-            dilemma.RaiseDomainEvent(postedEvent);
+            if (OptionCount - 1 < MinNumberOptions)
+            {
+                throw new DomainRuleException("TOO_FEW_OPTIONS");
+            }
 
-            return dilemma;
+            PostedDate = DateTime.Now;
+            RaiseDomainEvent(new DilemmaPostedEvent(Id, PosterId,
+                _options.Select(o => o.Id).ToList()));
         }
 
         public void AddOption(Guid optionId, string description)

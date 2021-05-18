@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics;
@@ -31,6 +32,13 @@ namespace DilemmaSvc.WebApi.Controllers
         public ICollection<Topic> GetTopics()
         {
             return _mediator.Send(new GetTopicsQuery()).Result;
+        }
+
+        [HttpPost]
+        [Route("dilemmas")]
+        public PostDilemmaCommandResult PostDilemma(PostDilemmaCommand request)
+        {
+            return _mediator.Send(request).Result;
         }
     }
 }

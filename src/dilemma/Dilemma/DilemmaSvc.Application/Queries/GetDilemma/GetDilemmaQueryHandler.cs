@@ -33,9 +33,6 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
         {
             using (IDbConnection connection = _connectionFactory.GetConnection())
             {
-                // TODO: Add column index to option.dilemma_id to optimise option lookup.
-                // TODO: Potential to optimise to utilise single query with LEFT JOIN.
-
                 string sql = $@"
                     SELECT d.id             AS {nameof(DTOs.Dilemma.DilemmaId)},
                            d.topic_id       AS {nameof(DTOs.Dilemma.TopicId)},
