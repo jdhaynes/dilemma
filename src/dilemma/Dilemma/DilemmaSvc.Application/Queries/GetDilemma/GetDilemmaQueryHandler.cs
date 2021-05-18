@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
@@ -21,12 +23,12 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
             _fileStore = fileStore;
         }
 
-        public async Task<DTOs.Dilemma> Handle(GetDilemmaQuery query, 
+        public async Task<DTOs.Dilemma> Handle(GetDilemmaQuery query,
             CancellationToken cancellationToken)
         {
             return GetDilemmaFromDatabase(query);
         }
-        
+
         private DTOs.Dilemma GetDilemmaFromDatabase(GetDilemmaQuery query)
         {
             using (IDbConnection connection = _connectionFactory.GetConnection())
@@ -36,32 +38,41 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
 
                 string sql = $@"
                     SELECT d.id             AS {nameof(DTOs.Dilemma.DilemmaId)},
+                           d.topic_id       AS {nameof(DTOs.Dilemma.TopicId)},
 	                       d.question       AS {nameof(DTOs.Dilemma.Question)},
 	                       d.posted_date    AS {nameof(DTOs.Dilemma.PostedDate)},
 	                       d.withdrawn_date AS {nameof(DTOs.Dilemma.WithdrawnDate)},
-                           p.id             AS {nameof(DTOs.Poster.Id)},
-                           p.dob            AS {nameof(DTOs.Poster.DateOfBirth)}
+                           p.id             AS {nameof(DTOs.Poster.PosterId)},
+                           p.dob            AS {nameof(DTOs.Poster.DateOfBirth)},
+                           o.id             AS {nameof(DTOs.Option.OptionId)},
+                           o.description    AS {nameof(DTOs.Option.Description)}
                     FROM dilemma AS d
                     LEFT JOIN poster AS p
                     ON d.poster_id = p.id
-                    WHERE dilemma.id = @DilemmaId;
+                    LEFT JOIN option AS o
+                    ON d.id = o.dilemma_id
+                    WHERE d.id = @DilemmaId;";
 
-                    SELECT id              AS {nameof(Option.OptionId)},
-	                       description     AS {nameof(Option.Description)}
-                    FROM option
-                    WHERE option.dilemma_id = @DilemmaId;";
+                Dictionary<Guid, DTOs.Dilemma> dict = new Dictionary<Guid, DTOs.Dilemma>();
+                return connection.Query<DTOs.Dilemma, Poster, Option, DTOs.Dilemma>(sql,
+                        (dilemma, poster, option) =>
+                        {
+                            DTOs.Dilemma dilemmaEntity;
 
-                using (var multiQuery =
-                    connection.QueryMultiple(sql, new {DilemmaId = query.DilemmaId}))
-                {
-                    DTOs.Dilemma dilemma = multiQuery.Read<DTOs.Dilemma>().SingleOrDefault();
-                    if (dilemma != null)
-                    {
-                        dilemma.Options = multiQuery.Read<Option>().ToList();
-                    }
+                            if (!dict.TryGetValue(dilemma.DilemmaId, out dilemmaEntity))
+                            {
+                                dilemmaEntity = dilemma;
+                                dilemmaEntity.Options = new List<Option>();
+                                dilemmaEntity.Poster = poster;
+                                dict.Add(dilemmaEntity.DilemmaId, dilemmaEntity);
+                            }
 
-                    return dilemma;
-                }
+                            dilemmaEntity.Options.Add(option);
+                            return dilemmaEntity;
+                        },
+                        splitOn: $"{nameof(DTOs.Dilemma.DilemmaId)},{nameof(DTOs.Poster.PosterId)}",
+                        param: new {DilemmaId = query.DilemmaId})
+                    .SingleOrDefault();
             }
         }
     }

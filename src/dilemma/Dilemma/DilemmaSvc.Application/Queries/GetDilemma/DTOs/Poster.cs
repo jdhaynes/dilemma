@@ -4,7 +4,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs
 {
     public class Poster
     {
-        public Guid Id { get; set; }
+        public Guid PosterId { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int Age => CalculateAge(DateOfBirth);
 
