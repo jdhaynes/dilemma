@@ -2,12 +2,12 @@ namespace DilemmaApp.Services.Common.Application
 {
     public class ValidationMessage
     {
-        public string Field { get; }
+        public string Property { get; }
         public string Message { get; }
 
-        public ValidationMessage(string field, string message)
+        public ValidationMessage(string property, string message)
         {
-            Field = field;
+            Property = property;
             Message = message;
         }
     }

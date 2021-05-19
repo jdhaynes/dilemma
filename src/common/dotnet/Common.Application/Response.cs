@@ -6,11 +6,11 @@ namespace DilemmaApp.Services.Common.Application
     public class Response<TPayload>
     {
         public TPayload Payload { get; private set; }
-
         public Error Error { get; private set; }
+        public ResponseState State { get; private set; }
+
         public IReadOnlyCollection<ValidationMessage> ValidationMessages =>
             _validationMessages.AsReadOnly();
-        
         private List<ValidationMessage> _validationMessages;
 
         public Response(TPayload payload)
@@ -18,20 +18,27 @@ namespace DilemmaApp.Services.Common.Application
             _validationMessages = new List<ValidationMessage>();
             Error = null;
             Payload = payload;
+            State = ResponseState.Ok;
         }
         
-        protected void AddValidationMessage(string field, string message)
+        public void AddValidationMessage(string field, string message)
         {
             NullOrEmptyCheckArgument(nameof(field), field);
             NullOrEmptyCheckArgument(nameof(message), message);
             
             _validationMessages.Add(new ValidationMessage(field, message));
+            State = ResponseState.ValidationError;
         }
 
-        protected void RaiseError(string errorCode, string message)
+        public void RaiseError(string errorCode, string message)
         {
             NullOrEmptyCheckArgument(nameof(errorCode), errorCode);
             NullOrEmptyCheckArgument(nameof(message), message);
+
+            if (Error != null)
+            {
+                throw new Exception("Only one error can be raised.");
+            }
 
             Error = new Error(errorCode, message);
         }

@@ -47,7 +47,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
                     WHERE d.id = @DilemmaId;";
 
                 Dictionary<Guid, DTOs.Dilemma> dict = new Dictionary<Guid, DTOs.Dilemma>();
-                
+
                 DTOs.Dilemma result = connection.Query<DTOs.Dilemma, Poster, Option, DTOs.Dilemma>(
                         sql,
                         (dilemma, poster, option) =>
