@@ -1,4 +1,5 @@
 using System;
+using DilemmaApp.Services.Common.Application;
 using DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma;
 using DilemmaApp.Services.Dilemma.Application.Commands.WithdrawDilemma;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
@@ -20,7 +21,7 @@ namespace DilemmaSvc.WebApi.Controllers
 
         [HttpGet]
         [Route("dilemmas/{dilemmaId}")]
-        public Dilemma GetDilemma(Guid dilemmaId)
+        public Response<Dilemma> GetDilemma(Guid dilemmaId)
         {
             return _mediator.Send(new GetDilemmaQuery(dilemmaId)).Result;
         }

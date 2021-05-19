@@ -5,13 +5,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
+using DilemmaApp.Services.Common.Application;
 using DilemmaApp.Services.Dilemma.Application.Interfaces;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs;
 using MediatR;
 
 namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
 {
-    public class GetDilemmaQueryHandler : IRequestHandler<GetDilemmaQuery, DTOs.Dilemma>
+    public class GetDilemmaQueryHandler : IRequestHandler<GetDilemmaQuery, Response<DTOs.Dilemma>>
     {
         private readonly ISqlConnectionFactory _connectionFactory;
         private readonly IFileStore _fileStore;
@@ -23,13 +24,8 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
             _fileStore = fileStore;
         }
 
-        public async Task<DTOs.Dilemma> Handle(GetDilemmaQuery query,
+        public async Task<Response<DTOs.Dilemma>> Handle(GetDilemmaQuery query,
             CancellationToken cancellationToken)
-        {
-            return GetDilemmaFromDatabase(query);
-        }
-
-        private DTOs.Dilemma GetDilemmaFromDatabase(GetDilemmaQuery query)
         {
             using (IDbConnection connection = _connectionFactory.GetConnection())
             {
@@ -52,7 +48,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
 
                 Dictionary<Guid, DTOs.Dilemma> dict = new Dictionary<Guid, DTOs.Dilemma>();
                 
-                return connection.Query<DTOs.Dilemma, Poster, Option, DTOs.Dilemma>(
+                DTOs.Dilemma result = connection.Query<DTOs.Dilemma, Poster, Option, DTOs.Dilemma>(
                         sql,
                         (dilemma, poster, option) =>
                         {
@@ -73,7 +69,8 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
                         param: new {DilemmaId = query.DilemmaId})
                     .Distinct()
                     .SingleOrDefault();
-                
+
+                return new Response<DTOs.Dilemma>(result);
             }
         }
     }
