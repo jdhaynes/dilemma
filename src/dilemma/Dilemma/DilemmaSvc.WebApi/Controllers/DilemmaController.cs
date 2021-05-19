@@ -5,7 +5,6 @@ using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace DilemmaSvc.WebApi.Controllers
 {

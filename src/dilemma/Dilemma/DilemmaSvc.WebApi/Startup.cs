@@ -37,8 +37,8 @@ namespace DilemmaSvc.WebApi
                 new PostgresConnectionFactory(
                     Configuration["Infrastructure:Postgres:ConnectionString"]));
             services.AddScoped<IFileStore>(_ =>
-                new AwsS3Bucket(Configuration["Infrastructure:S3:BaseURL"],
-                    Configuration["Infrastructure:S3:Region"]));
+                new AwsS3Bucket(Configuration["Infrastructure:S3:BucketName"],
+                    Configuration["Infrastructure:S3:BucketRegion"]));
 
             services.AddMediatR(typeof(GetDilemmaQuery).Assembly);
 
