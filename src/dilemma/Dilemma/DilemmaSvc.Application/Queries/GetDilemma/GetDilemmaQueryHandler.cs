@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using DilemmaApp.Services.Common.Application;
+using DilemmaApp.Services.Common.Application.RequestPipeline;
 using DilemmaApp.Services.Dilemma.Application.Interfaces;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs;
 using MediatR;

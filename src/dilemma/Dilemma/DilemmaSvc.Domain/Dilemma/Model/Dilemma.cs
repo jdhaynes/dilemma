@@ -45,7 +45,7 @@ namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
                 throw new DomainRuleException("TOO_MANY_OPTIONS");
             }
 
-            if (OptionCount - 1 < MinNumberOptions)
+            if (OptionCount < MinNumberOptions)
             {
                 throw new DomainRuleException("TOO_FEW_OPTIONS");
             }
