@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
+using DilemmaApp.Services.Common.Application.RequestPipeline;
 using DilemmaApp.Services.Dilemma.Application.Interfaces;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics.DTOs;
 using MediatR;
 
 namespace DilemmaApp.Services.Dilemma.Application.Queries.GetTopics
 {
-    public class GetTopicsQueryHandler : IRequestHandler<GetTopicsQuery, ICollection<Topic>>
+    public class GetTopicsQueryHandler : IRequestHandler<GetTopicsQuery, Response<ICollection<Topic>>>
     {
         private ISqlConnectionFactory _connectionFactory;
 
@@ -19,7 +20,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetTopics
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<ICollection<Topic>> Handle(GetTopicsQuery query,
+        public async Task<Response<ICollection<Topic>>> Handle(GetTopicsQuery query,
             CancellationToken cancellationToken)
         {
             // TODO: this query result won't change often - cache result?
@@ -31,7 +32,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetTopics
                     FROM topic";
 
                 List<Topic> topics = connection.Query<Topic>(sql).ToList();
-                return topics;
+                return new Response<ICollection<Topic>>(topics);
             }
         }
     }

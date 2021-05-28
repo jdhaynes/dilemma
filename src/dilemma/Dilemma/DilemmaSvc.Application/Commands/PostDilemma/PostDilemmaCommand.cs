@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using DilemmaApp.Services.Common.Application.RequestPipeline;
 using MediatR;
 
 namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma
 {
-    public class PostDilemmaCommand : IRequest<PostDilemmaCommandResult>
+    public class PostDilemmaCommand : IRequest<Response<PostDilemmaCommandResult>>
     {
         public Guid TopicId { get; set; }
         public Guid PosterId { get; set; }

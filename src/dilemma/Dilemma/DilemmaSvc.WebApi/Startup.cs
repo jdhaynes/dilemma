@@ -1,6 +1,9 @@
 using DilemmaApp.Services.Common.Application.RequestPipeline.Validation;
+using DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma;
+using DilemmaApp.Services.Dilemma.Application.Commands.WithdrawDilemma;
 using DilemmaApp.Services.Dilemma.Application.Interfaces;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
+using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics;
 using DilemmaApp.Services.Dilemma.Infrastructure.Postgres;
 using DilemmaApp.Services.Dilemma.Infrastructure.S3;
 using FluentValidation;
@@ -36,14 +39,22 @@ namespace DilemmaSvc.WebApi
                 new AwsS3Bucket(Configuration["Infrastructure:S3:BucketName"],
                     Configuration["Infrastructure:S3:BucketRegion"]));
 
-            services.AddMediatR(typeof(GetDilemmaQuery).Assembly);
-            
+            // Register validators.
             services.AddTransient<IValidator<GetDilemmaQuery>, GetDilemmaQueryValidator>();
+            services.AddTransient<IValidator<PostDilemmaCommand>, PostDilemmaCommandValidator>();
+            services.AddTransient<IValidator<GetTopicsQuery>, GetTopicsQueryValidator>();
+            services.AddTransient<IValidator<WithdrawDilemmaCommand>,
+                WithdrawDilemmaCommandValidator>();
+
+            // Register MediatR request pipeline and decorators.
+            services.AddMediatR(typeof(GetDilemmaQuery).Assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationHandler<,>));
 
             services.AddDbContext<DilemmaContext>(options =>
-                options.UseNpgsql(Configuration["Infrastructure:Postgres:ConnectionString"]));
-            
+            {
+                options.UseNpgsql(Configuration["Infrastructure:Postgres:ConnectionString"]);
+            });
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;

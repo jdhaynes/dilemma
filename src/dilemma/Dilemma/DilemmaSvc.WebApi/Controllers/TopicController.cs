@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DilemmaApp.Services.Common.Application.RequestPipeline;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics.DTOs;
 using MediatR;
@@ -18,7 +19,7 @@ namespace DilemmaSvc.WebApi.Controllers
         
         [HttpGet]
         [Route("topics")]
-        public ICollection<Topic> GetTopics()
+        public Response<ICollection<Topic>> GetTopics()
         {
             return _mediator.Send(new GetTopicsQuery()).Result;
         }

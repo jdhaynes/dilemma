@@ -7,7 +7,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
     {
         public GetDilemmaQueryValidator()
         {
-            RuleFor(x => x.DilemmaId).NotEqual(Guid.Empty);
+            RuleFor(x => x.DilemmaId).NotEmpty();
         }
     }
 }

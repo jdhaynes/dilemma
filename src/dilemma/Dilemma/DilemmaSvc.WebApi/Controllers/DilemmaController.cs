@@ -29,7 +29,7 @@ namespace DilemmaSvc.WebApi.Controllers
         
         [HttpPost]
         [Route("dilemmas")]
-        public PostDilemmaCommandResult PostDilemma(PostDilemmaCommand request)
+        public Response<PostDilemmaCommandResult> PostDilemma(PostDilemmaCommand request)
         {
             return _mediator.Send(request).Result;
         }
