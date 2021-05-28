@@ -6,7 +6,7 @@ namespace DilemmaApp.Services.Common.Domain
     {
         public string ErrorCode { get; }
 
-        public DomainRuleException(string errorCode) : base()
+        public DomainRuleException(string errorCode, string message) : base(message)
         {
             if (string.IsNullOrEmpty(errorCode))
             {

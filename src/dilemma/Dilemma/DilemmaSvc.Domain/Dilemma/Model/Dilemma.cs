@@ -42,12 +42,14 @@ namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
         {
             if (OptionCount > MaxNumberOptions)
             {
-                throw new DomainRuleException("TOO_MANY_OPTIONS");
+                throw new DomainRuleException("TOO_MANY_OPTIONS",
+                    $"A maximum of {MaxNumberOptions} options can be added.");
             }
 
             if (OptionCount < MinNumberOptions)
             {
-                throw new DomainRuleException("TOO_FEW_OPTIONS");
+                throw new DomainRuleException("TOO_FEW_OPTIONS",
+                    $"A minimum of {MinNumberOptions} options must be added.");
             }
 
             PostedDate = DateTime.Now;
@@ -59,7 +61,8 @@ namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
         {
             if (OptionCount > MaxNumberOptions)
             {
-                throw new DomainRuleException("TOO_MANY_OPTIONS");
+                throw new DomainRuleException("TOO_MANY_OPTIONS",
+                    $"A maximum of {MaxNumberOptions} options can be added.");
             }
 
             _options.Add(new Option(optionId, Id, description));
@@ -69,7 +72,8 @@ namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
         {
             if (OptionCount - 1 < MinNumberOptions)
             {
-                throw new DomainRuleException("TOO_FEW_OPTIONS");
+                throw new DomainRuleException("TOO_FEW_OPTIONS",
+                    $"A minimum of {MinNumberOptions} options must be added.");
             }
 
             Option option = _options.SingleOrDefault(o => o.Id == optionId);
@@ -79,7 +83,7 @@ namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
             }
             else
             {
-                throw new DomainRuleException("OPTION_DOESNT_EXIST");
+                throw new DomainRuleException("OPTION_DOESNT_EXIST", "Option does not exist.");
             }
         }
 
@@ -87,9 +91,9 @@ namespace DilemmaApp.Services.Dilemma.Domain.Dilemma.Model
         {
             if (IsWithdrawn)
             {
-                throw new DomainRuleException("ALREADY_WITHDRAWN");
+                throw new DomainRuleException("ALREADY_WITHDRAWN", "Dilemma is already withdrawn.");
             }
-            
+
             DateTime withdrawnDate = DateTime.Now;
             WithdrawnDate = withdrawnDate;
 

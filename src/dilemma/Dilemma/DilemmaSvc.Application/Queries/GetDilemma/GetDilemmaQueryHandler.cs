@@ -69,8 +69,8 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma
                         param: new {DilemmaId = query.DilemmaId})
                     .Distinct()
                     .SingleOrDefault();
-
-                return new Response<DTOs.Dilemma>(result);
+                
+                return new Response<DTOs.Dilemma>(result, ResponseState.Ok);
             }
         }
     }

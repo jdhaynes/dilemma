@@ -22,13 +22,5 @@ namespace DilemmaApp.Services.Common.Domain
 
             _domainEvents.Add(domainEvent);
         }
-
-        protected void CheckRule(IDomainRule rule)
-        {
-            if (!rule.Valid())
-            {
-                throw new DomainRuleException(rule.ErrorCode);
-            }
-        }
     }
 }

@@ -34,7 +34,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma
             return new Response<PostDilemmaCommandResult>(new PostDilemmaCommandResult()
             {
                 DilemmaId = dilemma.Id
-            });
+            }, ResponseState.Created);
         }
     }
 }

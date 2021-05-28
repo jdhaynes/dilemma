@@ -32,7 +32,7 @@ namespace DilemmaApp.Services.Dilemma.Application.Queries.GetTopics
                     FROM topic";
 
                 List<Topic> topics = connection.Query<Topic>(sql).ToList();
-                return new Response<ICollection<Topic>>(topics);
+                return new Response<ICollection<Topic>>(topics, ResponseState.Ok);
             }
         }
     }

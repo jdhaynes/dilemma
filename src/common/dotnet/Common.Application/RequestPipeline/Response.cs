@@ -9,15 +9,16 @@ namespace DilemmaApp.Services.Common.Application.RequestPipeline
         
         public Response() : base() { }
 
-        public Response(TPayload payload)
+        public Response(TPayload payload, ResponseState state)
         {
             Payload = payload;
+            State = state;
         }
     }
     public class Response
     {
         public Error Error { get; private set; }
-        public ResponseState State { get; private set; }
+        public ResponseState State { get; set; }
 
         public IReadOnlyCollection<ValidationMessage> ValidationMessages =>
             _validationMessages.AsReadOnly();
@@ -37,10 +38,10 @@ namespace DilemmaApp.Services.Common.Application.RequestPipeline
             CheckArgumentNotNullOrEmpty(nameof(message), message);
 
             _validationMessages.Add(new ValidationMessage(field, message));
-            State = ResponseState.ValidationError;
+            State = ResponseState.Error;
         }
 
-        public void RaiseError(string errorCode, string message)
+        public void RaiseError(ErrorType errorType, string errorCode, string message)
         {
             CheckArgumentNotNullOrEmpty(nameof(errorCode), errorCode);
             CheckArgumentNotNullOrEmpty(nameof(message), message);
@@ -50,7 +51,8 @@ namespace DilemmaApp.Services.Common.Application.RequestPipeline
                 throw new Exception("Only one error can be raised.");
             }
 
-            Error = new Error(errorCode, message);
+            Error = new Error(errorType, errorCode, message);
+            State = ResponseState.Error;
         }
 
         private void CheckArgumentNotNullOrEmpty(string argName, string argValue)

@@ -2,11 +2,13 @@ namespace DilemmaApp.Services.Common.Application.RequestPipeline
 {
     public class Error
     {
+        public ErrorType ErrorType { get; }
         public string ErrorCode { get; }
-        public string Message { get; set; }
+        public string Message { get; }
 
-        public Error(string errorCode, string message)
+        public Error(ErrorType errorType, string errorCode, string message)
         {
+            ErrorType = errorType;
             ErrorCode = errorCode;
             Message = message;
         }
