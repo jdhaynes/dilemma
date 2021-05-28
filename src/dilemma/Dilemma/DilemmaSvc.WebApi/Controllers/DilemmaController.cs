@@ -36,11 +36,9 @@ namespace DilemmaSvc.WebApi.Controllers
 
         [HttpPut]
         [Route("dilemmas/{dilemmaId}/withdraw")]
-        public ActionResult WithdrawDilemma(Guid dilemmaId)
+        public Response WithdrawDilemma(Guid dilemmaId)
         {
-            _mediator.Send(new WithdrawDilemmaCommand(dilemmaId));
-
-            return Ok();
+            return _mediator.Send(new WithdrawDilemmaCommand(dilemmaId)).Result;
         }
     }
 }

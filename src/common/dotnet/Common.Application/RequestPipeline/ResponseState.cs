@@ -1,4 +1,4 @@
-namespace DilemmaApp.Services.Common.Application
+namespace DilemmaApp.Services.Common.Application.RequestPipeline
 {
     public enum ResponseState
     {

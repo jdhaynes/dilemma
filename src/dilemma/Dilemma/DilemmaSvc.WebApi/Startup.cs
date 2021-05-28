@@ -1,3 +1,4 @@
+using DilemmaApp.Services.Common.Application.RequestPipeline.Logging;
 using DilemmaApp.Services.Common.Application.RequestPipeline.Validation;
 using DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma;
 using DilemmaApp.Services.Dilemma.Application.Commands.WithdrawDilemma;
@@ -48,6 +49,7 @@ namespace DilemmaSvc.WebApi
 
             // Register MediatR request pipeline and decorators.
             services.AddMediatR(typeof(GetDilemmaQuery).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ConsoleLogger<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationHandler<,>));
 
             services.AddDbContext<DilemmaContext>(options =>
