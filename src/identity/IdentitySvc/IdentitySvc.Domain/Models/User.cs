@@ -1,4 +1,5 @@
 using System;
+using DilemmaApp.IdentitySvc.Domain.Events;
 using DilemmaApp.Services.Common.Domain;
 
 namespace DilemmaApp.IdentitySvc.Domain.Models
@@ -32,6 +33,8 @@ namespace DilemmaApp.IdentitySvc.Domain.Models
                 Password = new Password(passwordHash, passwordSalt),
                 AccountRegistered = DateTime.Now
             };
+            
+            user.RaiseDomainEvent(new UserRegisteredDomainEvent(id));
 
             return user;
         }

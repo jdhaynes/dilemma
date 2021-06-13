@@ -5,9 +5,11 @@ using DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand;
 using DilemmaApp.IdentitySvc.Application.Commands.RegisterUserCommand;
 using DilemmaApp.IdentitySvc.Application.Interfaces;
 using DilemmaApp.IdentitySvc.Application.Services;
+using DilemmaApp.IdentitySvc.Infrastructure.Messaging;
 using DilemmaApp.IdentitySvc.Infrastructure.Postgres;
 using DilemmaApp.Services.Common.Application.ErrorHandling;
 using DilemmaApp.Services.Common.Application.Interfaces;
+using DilemmaApp.Services.Common.Application.Messaging;
 using DilemmaApp.Services.Common.Application.Validation;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
@@ -44,6 +46,9 @@ namespace DilemmaApp.IdentitySvc.WebApi
             services.AddScoped<ISqlConnectionFactory>(_ =>
                 new PostgresConnectionFactory(
                     Configuration["Infrastructure:Postgres:ConnectionString"]));
+            services.AddScoped<IMessageBus>(_ =>
+                new RabbitMQMessageBus(
+                    Configuration["Infrastructure:MessageBus:IntegrationEventExchange"]));
             services.AddScoped<IUserRepository, PostgresUserRepository>();
 
             services.AddTransient<IValidator<LoginUserCommand>,
@@ -61,12 +66,11 @@ namespace DilemmaApp.IdentitySvc.WebApi
             {
                 options.UseNpgsql(Configuration["Infrastructure:Postgres:ConnectionString"]);
             });
-            
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

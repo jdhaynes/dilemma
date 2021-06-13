@@ -4,9 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using DilemmaApp.IdentitySvc.Application.Commands.AuthenticateUserCommand.DTOs;
+using DilemmaApp.IdentitySvc.Application.IntegrationEvents;
 using DilemmaApp.IdentitySvc.Application.Interfaces;
 using DilemmaApp.Services.Common.Application;
 using DilemmaApp.Services.Common.Application.Interfaces;
+using DilemmaApp.Services.Common.Application.Messaging;
 using MediatR;
 
 namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand
@@ -17,13 +19,16 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand
         private IPasswordService _passwordService;
         private ISqlConnectionFactory _connectionFactory;
         private IAuthTokenService _tokenService;
+        private IMessageBus _messageBus;
 
         public LoginUserCommandHandler(IPasswordService passwordService,
-            ISqlConnectionFactory connectionFactory, IAuthTokenService tokenService)
+            ISqlConnectionFactory connectionFactory, IAuthTokenService tokenService,
+            IMessageBus messageBus)
         {
             _passwordService = passwordService;
             _connectionFactory = connectionFactory;
             _tokenService = tokenService;
+            _messageBus = messageBus;
         }
 
         public Task<Response<LoginUserCommandResult>> Handle(LoginUserCommand request,
@@ -60,11 +65,14 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand
                     : null;
 
                 result = new LoginUserCommandResult(isAuthenticated, token);
+                
+                _messageBus.PublishIntegrationEvent(
+                    new UserLoggedInIntegrationEvent(credentials.UserId));
             }
 
             Response<LoginUserCommandResult> response =
                 new Response<LoginUserCommandResult>(result, ResponseState.Ok);
-
+            
             return Task.FromResult(response);
         }
     }
