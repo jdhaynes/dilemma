@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using DilemmaApp.Services.Common.Domain;
 using MediatR;
 
-namespace DilemmaApp.Services.Common.Application.RequestPipeline.ErrorHandling
+namespace DilemmaApp.Services.Common.Application.ErrorHandling
 {
     public class ErrorHandler<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

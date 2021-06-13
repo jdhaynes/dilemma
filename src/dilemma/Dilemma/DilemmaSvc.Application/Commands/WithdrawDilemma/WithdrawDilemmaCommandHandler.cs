@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using DilemmaApp.Services.Common.Application.RequestPipeline;
+using DilemmaApp.Services.Common.Application;
 using DilemmaApp.Services.Dilemma.Application.Interfaces;
 using MediatR;
 

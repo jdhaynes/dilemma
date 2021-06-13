@@ -1,6 +1,5 @@
 using System;
 using DilemmaApp.Services.Common.Application;
-using DilemmaApp.Services.Common.Application.RequestPipeline;
 using DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma;
 using DilemmaApp.Services.Dilemma.Application.Commands.WithdrawDilemma;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;

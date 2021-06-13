@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using DilemmaApp.Services.Common.Application;
 using DilemmaApp.Services.Common.Application.RequestPipeline;
-using DilemmaApp.Services.Common.Application.RequestPipeline.Validation;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
 using DilemmaApp.Services.Dilemma.Infrastructure.Postgres;
 using NUnit.Framework;

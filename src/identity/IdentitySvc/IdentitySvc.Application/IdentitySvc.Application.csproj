@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>DilemmaApp.IdentitySvc.Application</AssemblyName>
+        <RootNamespace>DilemmaApp.IdentitySvc.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\common\dotnet\Common.Application\Common.Application.csproj" />
+      <ProjectReference Include="..\IdentitySvc.Domain\IdentitySvc.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.0.90" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
+    </ItemGroup>
+
+</Project>

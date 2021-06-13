@@ -1,4 +1,4 @@
-namespace DilemmaApp.Services.Common.Application.RequestPipeline
+namespace DilemmaApp.Services.Common.Application.ErrorHandling
 {
     public enum ErrorType
     {

@@ -1,5 +1,5 @@
 using System;
-using DilemmaApp.Services.Common.Application.RequestPipeline;
+using DilemmaApp.Services.Common.Application;
 using MediatR;
 
 namespace DilemmaApp.Services.Dilemma.Application.Commands.WithdrawDilemma

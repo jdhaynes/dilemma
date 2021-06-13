@@ -6,7 +6,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
-namespace DilemmaApp.Services.Common.Application.RequestPipeline.Validation
+namespace DilemmaApp.Services.Common.Application.Validation
 {
     public class ValidationHandler<TRequest, TResponse> 
         : IPipelineBehavior<TRequest, TResponse>

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using DilemmaApp.Services.Common.Application.ErrorHandling;
+using DilemmaApp.Services.Common.Application.Validation;
 
-namespace DilemmaApp.Services.Common.Application.RequestPipeline
+namespace DilemmaApp.Services.Common.Application
 {
     public class Response<TPayload> : Response
     {

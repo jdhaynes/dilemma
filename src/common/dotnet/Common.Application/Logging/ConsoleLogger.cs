@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-namespace DilemmaApp.Services.Common.Application.RequestPipeline.Logging
+namespace DilemmaApp.Services.Common.Application.Logging
 {
     public class ConsoleLogger<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

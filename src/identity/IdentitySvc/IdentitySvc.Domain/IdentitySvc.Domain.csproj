@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>DilemmaApp.IdentitySvc.Domain</AssemblyName>
+        <RootNamespace>DilemmaApp.IdentitySvc.Domain</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\common\dotnet\Common.Domain\Common.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

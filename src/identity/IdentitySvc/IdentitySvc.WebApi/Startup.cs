@@ -1,12 +1,14 @@
+using DilemmaApp.Common.Infrastructure;
+using DilemmaApp.IdentitySvc.Application;
+using DilemmaApp.IdentitySvc.Application.Commands.AuthenticateUserCommand;
+using DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand;
+using DilemmaApp.IdentitySvc.Application.Commands.RegisterUserCommand;
+using DilemmaApp.IdentitySvc.Application.Interfaces;
+using DilemmaApp.IdentitySvc.Application.Services;
+using DilemmaApp.IdentitySvc.Infrastructure.Postgres;
 using DilemmaApp.Services.Common.Application.ErrorHandling;
+using DilemmaApp.Services.Common.Application.Interfaces;
 using DilemmaApp.Services.Common.Application.Validation;
-using DilemmaApp.Services.Dilemma.Application.Commands.PostDilemma;
-using DilemmaApp.Services.Dilemma.Application.Commands.WithdrawDilemma;
-using DilemmaApp.Services.Dilemma.Application.Interfaces;
-using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
-using DilemmaApp.Services.Dilemma.Application.Queries.GetTopics;
-using DilemmaApp.Services.Dilemma.Infrastructure.Postgres;
-using DilemmaApp.Services.Dilemma.Infrastructure.S3;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,7 +19,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace DilemmaSvc.WebApi
+namespace DilemmaApp.IdentitySvc.WebApi
 {
     public class Startup
     {
@@ -32,37 +34,39 @@ namespace DilemmaSvc.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            // Register infrastructure.
-            services.AddScoped<IDilemmaRepository, PostgresDilemmaRepository>();
+
+            services.AddScoped<IPasswordService>(_ =>
+                new Sha256PasswordService(
+                    int.Parse(Configuration["Cryptography:SaltLengthBytes"])));
+            services.AddScoped<IAuthTokenService>(_ =>
+                new JwtAuthTokenService(
+                    Configuration["Cryptography:JwtTokenSecret"]));
             services.AddScoped<ISqlConnectionFactory>(_ =>
                 new PostgresConnectionFactory(
                     Configuration["Infrastructure:Postgres:ConnectionString"]));
-            services.AddScoped<IFileStore>(_ =>
-                new AwsS3Bucket(Configuration["Infrastructure:S3:BucketName"],
-                    Configuration["Infrastructure:S3:BucketRegion"]));
-            
-            services.AddDbContext<DilemmaContext>(options =>
+            services.AddScoped<IUserRepository, PostgresUserRepository>();
+
+            services.AddTransient<IValidator<LoginUserCommand>,
+                LoginUserCommandValidator>();
+            services.AddTransient<IValidator<AuthenticateUserCommand>,
+                AuthenticateUserCommandValidator>();
+            services.AddTransient<IValidator<RegisterUserCommand>,
+                RegisterUserCommandValidator>();
+
+            services.AddMediatR(typeof(AuthenticateUserCommand).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ErrorHandler<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationHandler<,>));
+
+            services.AddDbContext<IdentityContext>(options =>
             {
                 options.UseNpgsql(Configuration["Infrastructure:Postgres:ConnectionString"]);
             });
-
-            // Register validators.
-            services.AddTransient<IValidator<GetDilemmaQuery>, GetDilemmaQueryValidator>();
-            services.AddTransient<IValidator<PostDilemmaCommand>, PostDilemmaCommandValidator>();
-            services.AddTransient<IValidator<GetTopicsQuery>, GetTopicsQueryValidator>();
-            services.AddTransient<IValidator<WithdrawDilemmaCommand>,
-                WithdrawDilemmaCommandValidator>();
-
-            // Register MediatR request pipeline and decorators.
-            services.AddMediatR(typeof(GetDilemmaQuery).Assembly);
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ErrorHandler<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationHandler<,>));
             
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

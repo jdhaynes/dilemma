@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>DilemmaApp.IdentitySvc.WebApi</AssemblyName>
+        <RootNamespace>DilemmaApp.IdentitySvc.WebApi</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\common\dotnet\Common.Application\Common.Application.csproj" />
+      <ProjectReference Include="..\..\..\common\dotnet\Common.Infrastructure\Common.Infrastructure.csproj" />
+      <ProjectReference Include="..\IdentitySvc.Application\IdentitySvc.Application.csproj" />
+      <ProjectReference Include="..\IdentitySvc.Infrastructure\IdentitySvc.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="9.0.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.6" />
+    </ItemGroup>
+
+
+</Project>

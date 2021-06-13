@@ -1,6 +1,6 @@
-using FluentValidation;
+/*using FluentValidation;
 
-namespace DilemmaApp.Services.Common.Application.RequestPipeline.Validation
+namespace DilemmaApp.Services.Common.Application.Validation
 {
     public class ResponseValidator<TPayload> : AbstractValidator<Response<TPayload>>
     {
@@ -9,4 +9,4 @@ namespace DilemmaApp.Services.Common.Application.RequestPipeline.Validation
             RuleFor(x => x.Payload).SetValidator(payloadValidator);
         }
     }
-}
+}*/
