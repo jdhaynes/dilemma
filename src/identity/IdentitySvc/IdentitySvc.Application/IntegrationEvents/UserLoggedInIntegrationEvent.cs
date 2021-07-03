@@ -5,11 +5,6 @@ namespace DilemmaApp.IdentitySvc.Application.IntegrationEvents
 {
     public class UserLoggedInIntegrationEvent : IntegrationEvent
     {
-        public Guid UserId { get; }
-
-        public UserLoggedInIntegrationEvent(Guid userId = default)
-        {
-            UserId = userId;
-        }
+        public Guid UserId { get; set; }
     }
 }

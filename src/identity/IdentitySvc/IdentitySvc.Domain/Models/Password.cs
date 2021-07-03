@@ -2,10 +2,10 @@ namespace DilemmaApp.IdentitySvc.Domain.Models
 {
     public class Password
     {
-        public string Hash { get; private set; }
-        public string Salt { get; private set; }
+        public byte[] Hash { get; private set; }
+        public byte[] Salt { get; private set; }
 
-        public Password(string hash, string salt)
+        public Password(byte[] hash, byte[] salt)
         {
             Hash = hash;
             Salt = salt;

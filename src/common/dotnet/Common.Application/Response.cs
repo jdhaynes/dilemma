@@ -7,7 +7,7 @@ namespace DilemmaApp.Services.Common.Application
 {
     public class Response<TPayload> : Response
     {
-        public TPayload Payload { get; private set; }
+        public TPayload Payload { get; set; }
         
         public Response() : base() { }
 

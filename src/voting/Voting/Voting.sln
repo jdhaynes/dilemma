@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSvc.Application", "VotingSvc.Application\VotingSvc.Application.csproj", "{C1E41F64-449C-437B-B0F4-24593F3E91D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Application", "..\..\common\dotnet\Common.Application\Common.Application.csproj", "{1590AD26-BFD1-4F87-9145-59D3B89988DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Infrastructure", "..\..\common\dotnet\Common.Infrastructure\Common.Infrastructure.csproj", "{333A3056-1FFB-44BE-A777-D61E33D4E948}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSvc.WebApi", "VotingSvc.WebApi\VotingSvc.WebApi.csproj", "{445A42F3-0169-47D8-A633-BB8138D4C3FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSvc.Infrastructure", "VotingSvc.Infrastructure\VotingSvc.Infrastructure.csproj", "{FA97FB91-ED28-4F38-863D-E7C9605F0006}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingSvc.Domain", "VotingSvc.Domain\VotingSvc.Domain.csproj", "{B0E5547D-1CC9-4432-92A6-2030BC52994D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Domain", "..\..\common\dotnet\Common.Domain\Common.Domain.csproj", "{2F4025CC-ABEE-4434-BDE4-14E063ECDE0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1E41F64-449C-437B-B0F4-24593F3E91D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1E41F64-449C-437B-B0F4-24593F3E91D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1E41F64-449C-437B-B0F4-24593F3E91D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1E41F64-449C-437B-B0F4-24593F3E91D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1590AD26-BFD1-4F87-9145-59D3B89988DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1590AD26-BFD1-4F87-9145-59D3B89988DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1590AD26-BFD1-4F87-9145-59D3B89988DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1590AD26-BFD1-4F87-9145-59D3B89988DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{333A3056-1FFB-44BE-A777-D61E33D4E948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{333A3056-1FFB-44BE-A777-D61E33D4E948}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{333A3056-1FFB-44BE-A777-D61E33D4E948}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{333A3056-1FFB-44BE-A777-D61E33D4E948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{445A42F3-0169-47D8-A633-BB8138D4C3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{445A42F3-0169-47D8-A633-BB8138D4C3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{445A42F3-0169-47D8-A633-BB8138D4C3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{445A42F3-0169-47D8-A633-BB8138D4C3FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA97FB91-ED28-4F38-863D-E7C9605F0006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA97FB91-ED28-4F38-863D-E7C9605F0006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA97FB91-ED28-4F38-863D-E7C9605F0006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA97FB91-ED28-4F38-863D-E7C9605F0006}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0E5547D-1CC9-4432-92A6-2030BC52994D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0E5547D-1CC9-4432-92A6-2030BC52994D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0E5547D-1CC9-4432-92A6-2030BC52994D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0E5547D-1CC9-4432-92A6-2030BC52994D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F4025CC-ABEE-4434-BDE4-14E063ECDE0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F4025CC-ABEE-4434-BDE4-14E063ECDE0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F4025CC-ABEE-4434-BDE4-14E063ECDE0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F4025CC-ABEE-4434-BDE4-14E063ECDE0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -6,8 +6,6 @@ CREATE TABLE IF NOT EXISTS topic
 	name text
 );
 
-ALTER TABLE topic
-	OWNER TO dev;
 
 CREATE TABLE IF NOT EXISTS poster
 (
@@ -16,9 +14,6 @@ CREATE TABLE IF NOT EXISTS poster
 			PRIMARY KEY,
 	dob timestamp NOT NULL
 );
-
-ALTER TABLE poster
-	OWNER TO dev;
 
 CREATE TABLE IF NOT EXISTS dilemma
 (
@@ -37,9 +32,6 @@ CREATE TABLE IF NOT EXISTS dilemma
 			REFERENCES poster
 );
 
-ALTER TABLE dilemma
-	OWNER TO dev;
-
 CREATE TABLE IF NOT EXISTS option
 (
 	id          uuid NOT NULL
@@ -51,7 +43,3 @@ CREATE TABLE IF NOT EXISTS option
 		CONSTRAINT fk_dilemma
 			REFERENCES dilemma
 );
-
-ALTER TABLE option
-	OWNER TO dev;
-

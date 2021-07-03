@@ -28,8 +28,11 @@ namespace DilemmaApp.Services.Common.Application.ErrorHandling
             catch (Exception exception)
             {
                 TResponse response = new TResponse();
-                response.RaiseError(ErrorType.Application, 
+                response.RaiseError(ErrorType.Application,
                     "UNHANDLED_EXCEPTION", "A server error occured.");
+                
+                Console.WriteLine(exception.Message);
+                Console.WriteLine(exception.StackTrace);
 
                 return response;
             }

@@ -26,14 +26,15 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.RegisterUserCommand
             _userRepository = userRepository;
             _tokenService = tokenService;
             _passwordService = passwordService;
+            _messageBus = messageBus;
         }
 
         public Task<Response<RegisterUserCommandResult>> Handle(RegisterUserCommand request,
             CancellationToken cancellationToken)
         {
             Guid userId = Guid.NewGuid();
-            string salt = _passwordService.GenerateSalt();
-            string hash = _passwordService.GenerateHash(request.Password, salt);
+            byte[] salt = _passwordService.GenerateSalt();
+            byte[] hash = _passwordService.GenerateHash(request.Password, salt);
 
             User user = User.Register(userId, request.FirstName, request.LastName,
                 request.Email, request.DateOfBirth, hash, salt);
@@ -48,7 +49,8 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.RegisterUserCommand
 
             _messageBus.PublishIntegrationEvent(new UserRegisteredIntegrationEvent()
             {
-                UserId = userId
+                UserId = userId,
+                DateOfBirth = request.DateOfBirth
             });
 
             return Task.FromResult(response);

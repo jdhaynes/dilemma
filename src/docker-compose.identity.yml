@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    hostname: identitysvc-postgres
+    environment:
+      - POSTGRES_USER=identity_svc
+      - POSTGRES_PASSWORD=dev
+    ports:
+      - '25532:5432'
+    volumes:
+      - ./identity/database:/docker-entrypoint-initdb.d
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.identity
+    ports:
+      - '25530:80'

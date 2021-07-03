@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+service Identity {
+  rpc AuthenticateUser(AuthenticateUserRequest) returns (AuthenticateUserResponse) {}
+}
+
+message Response {
+  string response_state = 1;
+  string validation_messages = 2;
+  Error error = 3;
+}
+
+message Error {
+  string error_type = 1;
+  string error_code = 2;
+  string error_message = 3;
+}
+
+message ValidationMessage {
+  string property = 1;
+  string message = 2;
+}
+
+message AuthenticateUserRequest {
+  string token = 1;
+}
+
+message AuthenticateUserResponse {
+  Response headers = 1;
+  bool is_authenticated = 2;
+  string user_id = 3;
+}
+
+message LoginUserRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message RegisterUserRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+  string password = 4;
+  google.protobuf.Timestamp date_of_birth = 5;
+}

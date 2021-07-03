@@ -54,12 +54,10 @@ namespace DilemmaApp.IdentitySvc.Infrastructure.Postgres.EntityConfigurations
             {
                 p.Property(x => x.Hash)
                     .HasColumnName("password")
-                    .HasMaxLength(64)
                     .IsRequired();
 
                 p.Property(x => x.Salt)
                     .HasColumnName("salt")
-                    .HasMaxLength(32)
                     .IsRequired();
             });
         }

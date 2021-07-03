@@ -9,6 +9,7 @@ services:
       - db-data:/var/lib/postgresql/data
     ports:
       - '25522:5432'
+
   message_bus:
     image: 'rabbitmq'
     container_name: 'rabbitmq-messagebus'

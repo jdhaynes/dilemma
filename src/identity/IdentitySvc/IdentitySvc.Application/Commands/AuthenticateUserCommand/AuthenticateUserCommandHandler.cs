@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DilemmaApp.IdentitySvc.Application.Interfaces;
 using DilemmaApp.Services.Common.Application;
+using DilemmaApp.Services.Common.Application.ErrorHandling;
 using MediatR;
 
 namespace DilemmaApp.IdentitySvc.Application.Commands.AuthenticateUserCommand
@@ -16,7 +17,7 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.AuthenticateUserCommand
         {
             _tokenService = tokenService;
         }
-        
+
         public Task<Response<AuthenticateUserCommandResult>> Handle(AuthenticateUserCommand request,
             CancellationToken cancellationToken)
         {
@@ -27,13 +28,20 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.AuthenticateUserCommand
                 UserId = ParseUserIdFromToken(userId),
                 IsAuthenticated = userId != null
             };
-            
+
             ResponseState responseState = result.IsAuthenticated
                 ? ResponseState.Ok
                 : ResponseState.Error;
 
             Response<AuthenticateUserCommandResult> response =
                 new Response<AuthenticateUserCommandResult>(result, responseState);
+
+            if (!result.IsAuthenticated)
+            {
+                response.RaiseError(ErrorType.NotAuthenicated,
+                    "NOT_AUTHENTICATED",
+                    "User credentials could not be authenticated");
+            }
 
             return Task.FromResult(response);
         }

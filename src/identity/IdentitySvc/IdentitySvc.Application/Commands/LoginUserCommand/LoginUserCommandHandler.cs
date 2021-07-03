@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
-using DilemmaApp.IdentitySvc.Application.Commands.AuthenticateUserCommand.DTOs;
-using DilemmaApp.IdentitySvc.Application.IntegrationEvents;
+using DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand.DTOs;
 using DilemmaApp.IdentitySvc.Application.Interfaces;
 using DilemmaApp.Services.Common.Application;
+using DilemmaApp.Services.Common.Application.ErrorHandling;
 using DilemmaApp.Services.Common.Application.Interfaces;
 using DilemmaApp.Services.Common.Application.Messaging;
 using MediatR;
@@ -17,16 +17,17 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand
         Response<LoginUserCommandResult>>
     {
         private IPasswordService _passwordService;
-        private ISqlConnectionFactory _connectionFactory;
+        private ISqlConnectionFactory _sqlConnectionFactory;
         private IAuthTokenService _tokenService;
         private IMessageBus _messageBus;
 
         public LoginUserCommandHandler(IPasswordService passwordService,
-            ISqlConnectionFactory connectionFactory, IAuthTokenService tokenService,
+            ISqlConnectionFactory sqlConnectionFactory, 
+            IAuthTokenService tokenService,
             IMessageBus messageBus)
         {
             _passwordService = passwordService;
-            _connectionFactory = connectionFactory;
+            _sqlConnectionFactory = sqlConnectionFactory;
             _tokenService = tokenService;
             _messageBus = messageBus;
         }
@@ -34,10 +35,46 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand
         public Task<Response<LoginUserCommandResult>> Handle(LoginUserCommand request,
             CancellationToken cancellationToken)
         {
-            UserCredentials credentials;
-            LoginUserCommandResult result;
+            Response<LoginUserCommandResult> response = new Response<LoginUserCommandResult>();
+            UserCredentials credentials = GetUserCredentials(request.Email);
+            
+            if (credentials == null)
+            {
+                response.Payload = new LoginUserCommandResult(false, null);
+                response.State = ResponseState.Error;
+                response.RaiseError(ErrorType.NotAuthorized, 
+                    "NOT_AUTHENTICATED",
+                    "User credentials could not be authenticated");
+            }
+            else
+            {
+                bool isAuthenticated = _passwordService.AuthenticatePassword(
+                    request.Password,
+                    credentials.PasswordSalt,
+                    credentials.PasswordHash);
+   
+                if (isAuthenticated)
+                {
+                    string token = _tokenService.GenerateToken(credentials.UserId.ToString());
+                    response.Payload = new LoginUserCommandResult(true, token);
+                    response.State = ResponseState.Ok;
+                }
+                else
+                {
+                    response.Payload = new LoginUserCommandResult(false, null);
+                    response.State = ResponseState.Error;
+                    response.RaiseError(ErrorType.NotAuthorized, 
+                        "NOT_AUTHENTICATED",
+                        "User credentials could not be authenticated");
+                }
+            }
 
-            using (IDbConnection connection = _connectionFactory.GetConnection())
+            return Task.FromResult(response);
+        }
+
+        private UserCredentials GetUserCredentials(string email)
+        {
+            using (IDbConnection connection = _sqlConnectionFactory.GetConnection())
             {
                 string sql = $@"
                     SELECT u.password AS {nameof(UserCredentials.PasswordHash)},
@@ -46,34 +83,12 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand
                     FROM ""user"" AS u
                     WHERE email = @Email";
 
-                credentials = connection
-                    .Query<UserCredentials>(sql, param: new {Email = request.Email})
+                UserCredentials credentials = connection
+                    .Query<UserCredentials>(sql, param: new {Email = email})
                     .SingleOrDefault();
+
+                return credentials;
             }
-
-            if (credentials == null)
-            {
-                result = new LoginUserCommandResult(false, null);
-            }
-            else
-            {
-                bool isAuthenticated = _passwordService.AuthenticatePassword(request.Password,
-                    credentials.PasswordSalt, credentials.PasswordHash);
-
-                string token = isAuthenticated
-                    ? _tokenService.GenerateToken(credentials.UserId.ToString())
-                    : null;
-
-                result = new LoginUserCommandResult(isAuthenticated, token);
-                
-                _messageBus.PublishIntegrationEvent(
-                    new UserLoggedInIntegrationEvent(credentials.UserId));
-            }
-
-            Response<LoginUserCommandResult> response =
-                new Response<LoginUserCommandResult>(result, ResponseState.Ok);
-            
-            return Task.FromResult(response);
         }
     }
 }

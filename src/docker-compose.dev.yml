@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  dilemma-svc-api:
+    extends:
+      file: ./docker-compose.dilemma.yml
+      service: api
+
+  dilemma-svc-postgres:
+    extends:
+      file: ./docker-compose.dilemma.yml
+      service: postgres
+
+  identity-svc-api:
+    extends:
+      file: ./docker-compose.identity.yml
+      service: api
+
+  identity-svc-postgres:
+    extends:
+      file: ./docker-compose.identity.yml
+      service: postgres
+
+  message_bus:
+    extends:
+      file: ./docker-compose.infrastructure.yml
+      service: rabbitmq
+
+volumes:
+  rabbitmq-data:
+  rabbitmq-logs:

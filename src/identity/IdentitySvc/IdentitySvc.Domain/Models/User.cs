@@ -22,7 +22,7 @@ namespace DilemmaApp.IdentitySvc.Domain.Models
         }
 
         public static User Register(Guid id, string firstName, string lastName, string email,
-            DateTime dob, string passwordHash, string passwordSalt)
+            DateTime dob, byte[] passwordHash, byte[] passwordSalt)
         {
             User user = new User()
             {
@@ -39,7 +39,8 @@ namespace DilemmaApp.IdentitySvc.Domain.Models
             return user;
         }
         
-        public void ChangePassword(string newPasswordHash, string newPasswordSalt)
+        
+        public void ChangePassword(byte[] newPasswordHash, byte[] newPasswordSalt)
         {
             Password = new Password(newPasswordHash, newPasswordSalt);
         }

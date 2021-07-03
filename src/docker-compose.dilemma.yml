@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    hostname: dilemmasvc-postgres
+    environment:
+      - POSTGRES_USER=dilemma_svc
+      - POSTGRES_PASSWORD=dev
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./dilemma/database:/docker-entrypoint-initdb.d
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dilemma
+    ports:
+      - '25250:80'

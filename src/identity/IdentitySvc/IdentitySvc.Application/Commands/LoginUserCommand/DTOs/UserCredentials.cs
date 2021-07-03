@@ -1,11 +1,11 @@
 using System;
 
-namespace DilemmaApp.IdentitySvc.Application.Commands.AuthenticateUserCommand.DTOs
+namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand.DTOs
 {
     public class UserCredentials
     {
-        public Guid UserId { get; private set; }
-        public string PasswordHash { get; private set; }
-        public string PasswordSalt { get; private set; }
+        public Guid UserId { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
     }
 }

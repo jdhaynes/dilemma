@@ -11,9 +11,11 @@ namespace DilemmaApp.Services.Common.Application.Logging
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
-            Console.Write("I've just run!");
-
-            return next();
+            Console.WriteLine($"Request {request.GetType().Name}: {request}");
+            TResponse result = next().Result;
+            
+            Console.WriteLine($"Response {request.GetType().Name}: {result}");
+            return Task.FromResult(result);
         }
     }
 }

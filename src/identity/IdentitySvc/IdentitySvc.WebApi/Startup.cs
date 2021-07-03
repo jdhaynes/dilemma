@@ -1,14 +1,15 @@
 using DilemmaApp.Common.Infrastructure;
+using DilemmaApp.Common.Infrastructure.RabbitMqMessageBus;
 using DilemmaApp.IdentitySvc.Application;
 using DilemmaApp.IdentitySvc.Application.Commands.AuthenticateUserCommand;
 using DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand;
 using DilemmaApp.IdentitySvc.Application.Commands.RegisterUserCommand;
 using DilemmaApp.IdentitySvc.Application.Interfaces;
-using DilemmaApp.IdentitySvc.Application.Services;
-using DilemmaApp.IdentitySvc.Infrastructure.Messaging;
+using DilemmaApp.IdentitySvc.Infrastructure.Crytography;
 using DilemmaApp.IdentitySvc.Infrastructure.Postgres;
 using DilemmaApp.Services.Common.Application.ErrorHandling;
 using DilemmaApp.Services.Common.Application.Interfaces;
+using DilemmaApp.Services.Common.Application.Logging;
 using DilemmaApp.Services.Common.Application.Messaging;
 using DilemmaApp.Services.Common.Application.Validation;
 using FluentValidation;
@@ -20,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
 
 namespace DilemmaApp.IdentitySvc.WebApi
 {
@@ -46,9 +48,20 @@ namespace DilemmaApp.IdentitySvc.WebApi
             services.AddScoped<ISqlConnectionFactory>(_ =>
                 new PostgresConnectionFactory(
                     Configuration["Infrastructure:Postgres:ConnectionString"]));
-            services.AddScoped<IMessageBus>(_ =>
-                new RabbitMQMessageBus(
-                    Configuration["Infrastructure:MessageBus:IntegrationEventExchange"]));
+            
+            services.AddSingleton<IConnectionFactory>(_ => new ConnectionFactory()
+            {
+                HostName = Configuration["Infrastructure:RabbitMQ:Host"],
+                UserName = Configuration["Infrastructure:RabbitMQ:User"],
+                Password = Configuration["Infrastructure:RabbitMQ:Password"],
+                Port = int.Parse(Configuration["Infrastructure:RabbitMQ:Port"])
+            });
+            
+            services.AddSingleton<IPersistantRabbitMqConnection, PersistantRabbitMqConnection>();
+            services.AddScoped<IMessageBus>(_ => new RabbitMqMessageBus(
+                _.GetRequiredService<IPersistantRabbitMqConnection>(),
+                Configuration["Infrastructure:RabbitMQ:ExchangeName"]));
+            
             services.AddScoped<IUserRepository, PostgresUserRepository>();
 
             services.AddTransient<IValidator<LoginUserCommand>,
@@ -59,6 +72,7 @@ namespace DilemmaApp.IdentitySvc.WebApi
                 RegisterUserCommandValidator>();
 
             services.AddMediatR(typeof(AuthenticateUserCommand).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ConsoleLogger<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ErrorHandler<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationHandler<,>));
 
