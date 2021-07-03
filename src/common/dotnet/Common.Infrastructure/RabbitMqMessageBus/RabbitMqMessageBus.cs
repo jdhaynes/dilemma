@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using DilemmaApp.Services.Common.Application.Messaging;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -21,7 +22,39 @@ namespace DilemmaApp.Common.Infrastructure.RabbitMqMessageBus
 
         public void PublishIntegrationEvent(IntegrationEvent @event)
         {
-            // Not implemented.
+            if (!_connection.IsConnected)
+            {
+                _connection.Connect();
+            }
+
+            using (IModel channel = _connection.OpenChannel())
+            {
+                string queueName = @event.GetType().Name;
+                string eventJson = JsonConvert.SerializeObject(@event);
+                byte[] body = Encoding.UTF8.GetBytes(eventJson);
+                
+                channel.ExchangeDeclare(
+                    exchange: _exchangeName,
+                    type: ExchangeType.Direct);
+
+                channel.QueueDeclare(
+                    queue: queueName,
+                    durable: true,
+                    exclusive: false,
+                    autoDelete: false,
+                    arguments: null);
+
+                channel.QueueBind(
+                    queue: queueName,
+                    exchange: _exchangeName,
+                    routingKey: queueName);
+                
+                channel.BasicPublish(
+                    exchange: _exchangeName,
+                    routingKey: queueName,
+                    basicProperties: null,
+                    body: body);
+            }
         }
 
         public void Subscribe<TEvent, THandler>()
@@ -52,8 +85,6 @@ namespace DilemmaApp.Common.Infrastructure.RabbitMqMessageBus
                     queue: queueName,
                     exchange: _exchangeName,
                     routingKey: queueName);
-
-                Console.WriteLine("Testing 123");
 
                 EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (model, ea) =>
