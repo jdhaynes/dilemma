@@ -9,7 +9,7 @@ using VotingSvc.Application.IntegrationEvents.Outbound;
 
 namespace VotingSvc.Application.Commands.CastVoteCommand
 {
-    public class CastVoteCommandHandler : IRequestHandler<CastVoteCommand, Response<Dilemma>>
+    public class CastVoteCommandHandler : IRequestHandler<CastVoteCommand, Response<Unit>>
     {
         private IMessageBus _messageBus;
 
@@ -18,11 +18,12 @@ namespace VotingSvc.Application.Commands.CastVoteCommand
             _messageBus = messageBus;
         }
 
-        public Task<Response<Dilemma>> Handle(CastVoteCommand request,
+        public Task<Response<Unit>> Handle(CastVoteCommand request,
             CancellationToken cancellationToken)
         {
             VoteCastEvent @event = new VoteCastEvent()
             {
+                DilemmaId = request.DilemmaId,
                 OptionId = request.OptionId,
                 VoterId = request.UserId,
                 VotedAt = DateTime.Now
@@ -30,7 +31,10 @@ namespace VotingSvc.Application.Commands.CastVoteCommand
 
             _messageBus.PublishIntegrationEvent(@event);
 
-            return new Task<Response<Dilemma>>()
+            Response<Unit> response = new Response<Unit>();
+            response.State = ResponseState.Ok;
+
+            return Task.FromResult(response);
         }
     }
 }

@@ -1,12 +1,18 @@
 using DilemmaApp.Common.Infrastructure.RabbitMqMessageBus;
+using DilemmaApp.Services.Common.Application.ErrorHandling;
 using DilemmaApp.Services.Common.Application.Messaging;
+using DilemmaApp.Services.Common.Application.Validation;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
-using VotingSvc.Application.IntegrationEvents.Inbound;
+using VotingSvc.Application.Commands.CastVoteCommand;
+using VotingSvc.WebApi.BackgroundTasks;
 
 namespace VotingSvc.WebApi
 {
@@ -23,16 +29,30 @@ namespace VotingSvc.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
+            services.AddHostedService<EventSubscriberService>();
 
             services.AddSingleton<IConnectionFactory>(_ => new ConnectionFactory()
             {
-                HostName = "localhost"
+                HostName = Configuration["Infrastructure:RabbitMQ:Host"],
+                UserName = Configuration["Infrastructure:RabbitMQ:User"],
+                Password = Configuration["Infrastructure:RabbitMQ:Password"],
+                Port = int.Parse(Configuration["Infrastructure:RabbitMQ:Port"])
             });
 
+            services.AddTransient<IValidator<CastVoteCommand>,
+                CastVoteCommandValidator>();
+
             services.AddSingleton<IPersistantRabbitMqConnection, PersistantRabbitMqConnection>();
-            services.AddSingleton<IMessageBus>(_ => new RabbitMqMessageBus(
+            services.AddScoped<IMessageBus>(_ => new RabbitMqMessageBus(
                 _.GetRequiredService<IPersistantRabbitMqConnection>(),
-                "integration_events_2"));
+                _.GetRequiredService<ILogger<RabbitMqMessageBus>>(),
+                Configuration["Infrastructure:RabbitMQ:ExchangeName"]
+            ));
+
+            services.AddMediatR(typeof(CastVoteCommand).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ErrorHandler<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationHandler<,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,9 +70,6 @@ namespace VotingSvc.WebApi
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            
-            IMessageBus bus = app.ApplicationServices.GetRequiredService<IMessageBus>();
-            bus.Subscribe<DilemmaPostedEvent, DilemmaPostedEventHandler>();
 
         }
     }

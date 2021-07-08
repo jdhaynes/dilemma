@@ -9,11 +9,27 @@
       <PackageReference Include="MediatR" Version="9.0.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.5.1" />
+      <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+      <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DilemmaSvc.Application\DilemmaSvc.Application.csproj" />
       <ProjectReference Include="..\DilemmaSvc.Infrastructure\DilemmaSvc.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="out\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="out\appsettings.json" />
+      <_ContentIncludedByDefault Remove="out\DilemmaApp.Services.Common.Application.deps.json" />
+      <_ContentIncludedByDefault Remove="out\DilemmaApp.Services.Common.Domain.deps.json" />
+      <_ContentIncludedByDefault Remove="out\DilemmaApp.Services.Dilemma.Application.deps.json" />
+      <_ContentIncludedByDefault Remove="out\DilemmaApp.Services.Dilemma.Domain.deps.json" />
+      <_ContentIncludedByDefault Remove="out\DilemmaApp.Services.Dilemma.Infrastructure.deps.json" />
+      <_ContentIncludedByDefault Remove="out\DilemmaSvc.WebApi.deps.json" />
+      <_ContentIncludedByDefault Remove="out\DilemmaSvc.WebApi.runtimeconfig.dev.json" />
+      <_ContentIncludedByDefault Remove="out\DilemmaSvc.WebApi.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="out\Properties\launchSettings.json" />
     </ItemGroup>
 
 

@@ -11,6 +11,29 @@ services:
       - rabbitmq-data:/var/lib/rabbitmq/
       - rabbitmq-logs:/var/log/rabbitmq
 
+  elastic-logs:
+    hostname: elastic-logs
+    image: elasticsearch:7.9.2
+    ports:
+      - '9200:9200'
+    volumes:
+      - elastic-logs-data:/usr/share/elasticsearch/data
+    environment:
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+      - discovery.type=single-node
+
+  kibana:
+    hostname: kibana
+    image: kibana:7.9.2
+    ports:
+      - '5601:5601'
+    environment:
+      - ELASTICSEARCH_URL=http://elastic-logs:9200
+      - ELASTICSEARCH_HOSTS=http://elastic-logs:9200
+
 volumes:
   rabbitmq-data:
   rabbitmq-logs:
+  elastic-logs-data:

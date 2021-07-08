@@ -21,11 +21,30 @@ services:
       file: ./docker-compose.identity.yml
       service: postgres
 
+  voting-svc-api:
+    hostname: voting-svc-api
+    build:
+      context: .
+      dockerfile: Dockerfile.voting
+    ports:
+      - '25270:80'
+
   message_bus:
     extends:
       file: ./docker-compose.infrastructure.yml
       service: rabbitmq
 
+  elastic-logs:
+    extends:
+      file: ./docker-compose.infrastructure.yml
+      service: elastic-logs
+
+  kibana:
+    extends:
+      file: ./docker-compose.infrastructure.yml
+      service: kibana
+
 volumes:
   rabbitmq-data:
   rabbitmq-logs:
+  elastic-logs-data:

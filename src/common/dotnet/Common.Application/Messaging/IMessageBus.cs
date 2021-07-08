@@ -1,6 +1,8 @@
+using System;
+
 namespace DilemmaApp.Services.Common.Application.Messaging
 {
-    public interface IMessageBus
+    public interface IMessageBus : IDisposable
     {
         void PublishIntegrationEvent(IntegrationEvent @event);
 

@@ -4,6 +4,7 @@ using DilemmaApp.IdentitySvc.Application;
 using DilemmaApp.IdentitySvc.Application.Commands.AuthenticateUserCommand;
 using DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand;
 using DilemmaApp.IdentitySvc.Application.Commands.RegisterUserCommand;
+using DilemmaApp.IdentitySvc.Application.IntegrationEvents;
 using DilemmaApp.IdentitySvc.Application.Interfaces;
 using DilemmaApp.IdentitySvc.Infrastructure.Crytography;
 using DilemmaApp.IdentitySvc.Infrastructure.Postgres;
@@ -21,6 +22,7 @@ using Microsoft.Extensions.Hosting;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace DilemmaApp.IdentitySvc.WebApi
@@ -60,6 +62,7 @@ namespace DilemmaApp.IdentitySvc.WebApi
             services.AddSingleton<IPersistantRabbitMqConnection, PersistantRabbitMqConnection>();
             services.AddScoped<IMessageBus>(_ => new RabbitMqMessageBus(
                 _.GetRequiredService<IPersistantRabbitMqConnection>(),
+                _.GetRequiredService<ILogger<RabbitMqMessageBus>>(),
                 Configuration["Infrastructure:RabbitMQ:ExchangeName"]));
             
             services.AddScoped<IUserRepository, PostgresUserRepository>();
@@ -72,7 +75,6 @@ namespace DilemmaApp.IdentitySvc.WebApi
                 RegisterUserCommandValidator>();
 
             services.AddMediatR(typeof(AuthenticateUserCommand).Assembly);
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ConsoleLogger<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ErrorHandler<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationHandler<,>));
 

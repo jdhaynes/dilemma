@@ -6,6 +6,7 @@ using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma;
 using DilemmaApp.Services.Dilemma.Application.Queries.GetDilemma.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace DilemmaSvc.WebApi.Controllers
 {
@@ -13,16 +14,19 @@ namespace DilemmaSvc.WebApi.Controllers
     public class DilemmaController : Controller
     {
         private IMediator _mediator;
+        private ILogger _logger;
         
-        public DilemmaController(IMediator mediator)
+        public DilemmaController(IMediator mediator, ILogger logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet]
         [Route("dilemmas/{dilemmaId}")]
         public Response<Dilemma> GetDilemma(Guid dilemmaId)
         {
+            _logger.Information("Request to get dilemma {@dilemmaId}", dilemmaId);
             return _mediator.Send(new GetDilemmaQuery(dilemmaId)).Result;
         }
         

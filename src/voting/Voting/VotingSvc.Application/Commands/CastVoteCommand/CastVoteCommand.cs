@@ -5,7 +5,7 @@ using VotingSvc.Application.Commands.CastVoteCommand.DTOs;
 
 namespace VotingSvc.Application.Commands.CastVoteCommand
 {
-    public class CastVoteCommand : IRequest<Response<Dilemma>>
+    public class CastVoteCommand : IRequest<Response<Unit>>
     {
         public Guid UserId { get; set; }
         public Guid DilemmaId { get; set; }

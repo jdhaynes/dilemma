@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand.DTOs;
+using DilemmaApp.IdentitySvc.Application.IntegrationEvents;
 using DilemmaApp.IdentitySvc.Application.Interfaces;
 using DilemmaApp.Services.Common.Application;
 using DilemmaApp.Services.Common.Application.ErrorHandling;
@@ -22,7 +23,7 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand
         private IMessageBus _messageBus;
 
         public LoginUserCommandHandler(IPasswordService passwordService,
-            ISqlConnectionFactory sqlConnectionFactory, 
+            ISqlConnectionFactory sqlConnectionFactory,
             IAuthTokenService tokenService,
             IMessageBus messageBus)
         {
@@ -37,12 +38,12 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand
         {
             Response<LoginUserCommandResult> response = new Response<LoginUserCommandResult>();
             UserCredentials credentials = GetUserCredentials(request.Email);
-            
+
             if (credentials == null)
             {
                 response.Payload = new LoginUserCommandResult(false, null);
                 response.State = ResponseState.Error;
-                response.RaiseError(ErrorType.NotAuthorized, 
+                response.RaiseError(ErrorType.NotAuthorized,
                     "NOT_AUTHENTICATED",
                     "User credentials could not be authenticated");
             }
@@ -52,18 +53,23 @@ namespace DilemmaApp.IdentitySvc.Application.Commands.LoginUserCommand
                     request.Password,
                     credentials.PasswordSalt,
                     credentials.PasswordHash);
-   
+
                 if (isAuthenticated)
                 {
                     string token = _tokenService.GenerateToken(credentials.UserId.ToString());
                     response.Payload = new LoginUserCommandResult(true, token);
                     response.State = ResponseState.Ok;
+
+                    _messageBus.PublishIntegrationEvent(new UserLoggedInIntegrationEvent()
+                    {
+                        UserId = credentials.UserId
+                    });
                 }
                 else
                 {
                     response.Payload = new LoginUserCommandResult(false, null);
                     response.State = ResponseState.Error;
-                    response.RaiseError(ErrorType.NotAuthorized, 
+                    response.RaiseError(ErrorType.NotAuthorized,
                         "NOT_AUTHENTICATED",
                         "User credentials could not be authenticated");
                 }

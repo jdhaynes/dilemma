@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS dilemma
 			REFERENCES topic,
 	question       varchar(140) NOT NULL,
 	posted_date    timestamp    NOT NULL,
-	is_withdrawn   boolean      NOT NULL,
 	withdrawn_date timestamp,
 	poster_id      uuid
 		CONSTRAINT fk_poster
@@ -38,7 +37,6 @@ CREATE TABLE IF NOT EXISTS option
 		CONSTRAINT option_pkey
 			PRIMARY KEY,
 	description varchar(40),
-	image_object_id uuid NOT NULL,
 	dilemma_id  uuid NOT NULL
 		CONSTRAINT fk_dilemma
 			REFERENCES dilemma
