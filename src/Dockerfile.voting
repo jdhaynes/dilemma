@@ -1,16 +1,16 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 
+COPY voting/Voting/*.sln ./voting/Voting/
 COPY voting/Voting/VotingSvc.Domain/*.csproj ./voting/Voting/VotingSvc.Domain/
 COPY voting/Voting/VotingSvc.Infrastructure/*.csproj ./voting/Voting/VotingSvc.Infrastructure/
 COPY voting/Voting/VotingSvc.WebApi/*.csproj ./voting/Voting/VotingSvc.WebApi/
 COPY voting/Voting/VotingSvc.Application/*.csproj ./voting/Voting/VotingSvc.Application/
-
 COPY common/dotnet/Common.Application/*.csproj ./common/dotnet/Common.Application/
 COPY common/dotnet/Common.Domain/*.csproj ./common/dotnet/Common.Domain/
 COPY common/dotnet/Common.Infrastructure/*.csproj ./common/dotnet/Common.Infrastructure/
 
-RUN dotnet restore
+RUN dotnet restore voting/Voting/
 
 COPY voting/ voting/
 COPY common/ common/

@@ -1,16 +1,16 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 
+COPY dilemma/Dilemma/*.sln ./dilemma/Dilemma/
 COPY dilemma/Dilemma/DilemmaSvc.Application/*.csproj ./dilemma/Dilemma/DilemmaSvc.Application/
 COPY dilemma/Dilemma/DilemmaSvc.Domain/*.csproj ./dilemma/Dilemma/DilemmaSvc.Domain/
 COPY dilemma/Dilemma/DilemmaSvc.Infrastructure/*.csproj ./dilemma/Dilemma/DilemmaSvc.Infrastructure/
 COPY dilemma/Dilemma/DilemmaSvc.WebApi/*.csproj ./dilemma/Dilemma/DilemmaSvc.WebApi/
-
 COPY common/dotnet/Common.Application/*.csproj ./common/dotnet/Common.Application/
 COPY common/dotnet/Common.Domain/*.csproj ./common/dotnet/Common.Domain/
 COPY common/dotnet/Common.Infrastructure/*.csproj ./common/dotnet/Common.Infrastructure/
 
-RUN dotnet restore
+RUN dotnet restore dilemma/Dilemma
 
 COPY dilemma/ dilemma/
 COPY common/ common/
