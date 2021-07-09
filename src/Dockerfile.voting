@@ -1,8 +1,15 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 
-COPY voting/Voting/*.csproj ./
-COPY common/dotnet/*.csproj ./
+COPY voting/Voting/VotingSvc.Domain/*.csproj ./voting/Voting/VotingSvc.Domain/
+COPY voting/Voting/VotingSvc.Infrastructure/*.csproj ./voting/Voting/VotingSvc.Infrastructure/
+COPY voting/Voting/VotingSvc.WebApi/*.csproj ./voting/Voting/VotingSvc.WebApi/
+COPY voting/Voting/VotingSvc.Application/*.csproj ./voting/Voting/VotingSvc.Application/
+
+COPY common/dotnet/Common.Application/*.csproj ./common/dotnet/Common.Application/
+COPY common/dotnet/Common.Domain/*.csproj ./common/dotnet/Common.Domain/
+COPY common/dotnet/Common.Infrastructure/*.csproj ./common/dotnet/Common.Infrastructure/
+
 RUN dotnet restore
 
 COPY voting/ voting/
@@ -15,4 +22,4 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 COPY --from=build /app/out .
-ENTRYPOINT [ "dotnet", "VotingSvc.WebApi.dll"]
+ENTRYPOINT [ "dotnet", "VotingSvc.WebApidll"]

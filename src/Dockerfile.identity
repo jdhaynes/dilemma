@@ -1,8 +1,15 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 
-COPY identity/IdentitySvc/*.csproj ./
-COPY common/dotnet/*.csproj ./
+COPY identity/IdentitySvc/IdentitySvc.Application/*.csproj ./identity/IdentitySvc/IdentitySvc.Application/
+COPY identity/IdentitySvc/IdentitySvc.Domain/*.csproj ./identity/IdentitySvc/IdentitySvc.Domain/
+COPY identity/IdentitySvc/IdentitySvc.Infrastructure/*.csproj ./identity/IdentitySvc/IdentitySvc.Infrastructure/
+COPY identity/IdentitySvc/IdentitySvc.WebApi/*.csproj ./identity/IdentitySvc/IdentitySvc.WebApi/
+
+COPY common/dotnet/Common.Application/*.csproj ./common/dotnet/Common.Application/
+COPY common/dotnet/Common.Domain/*.csproj ./common/dotnet/Common.Domain/
+COPY common/dotnet/Common.Infrastructure/*.csproj ./common/dotnet/Common.Infrastructure/
+
 RUN dotnet restore
 
 COPY identity/ identity/
