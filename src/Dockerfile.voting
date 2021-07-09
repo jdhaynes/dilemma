@@ -10,7 +10,7 @@ COPY common/dotnet/Common.Application/*.csproj ./common/dotnet/Common.Applicatio
 COPY common/dotnet/Common.Domain/*.csproj ./common/dotnet/Common.Domain/
 COPY common/dotnet/Common.Infrastructure/*.csproj ./common/dotnet/Common.Infrastructure/
 
-RUN dotnet restore voting/Voting/
+RUN dotnet restore ./voting/Voting/
 
 COPY voting/ voting/
 COPY common/ common/

@@ -10,7 +10,7 @@ COPY common/dotnet/Common.Application/*.csproj ./common/dotnet/Common.Applicatio
 COPY common/dotnet/Common.Domain/*.csproj ./common/dotnet/Common.Domain/
 COPY common/dotnet/Common.Infrastructure/*.csproj ./common/dotnet/Common.Infrastructure/
 
-RUN dotnet restore /identity/IdentitySvc
+RUN dotnet restore ./identity/IdentitySvc
 
 COPY identity/ identity/
 COPY common/ common/
